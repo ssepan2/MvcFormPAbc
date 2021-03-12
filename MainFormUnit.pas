@@ -10,8 +10,8 @@ type
   {$region FormDesigner}
   internal
     {$resource MainFormUnit.MainForm.resources}
-    menuStrip1: MenuStrip;
-    fileToolStripMenuItem: ToolStripMenuItem;
+    menuStrip: MenuStrip;
+    mnuFile: ToolStripMenuItem;
     newToolStripMenuItem: ToolStripMenuItem;
     openToolStripMenuItem: ToolStripMenuItem;
     saveToolStripMenuItem: ToolStripMenuItem;
@@ -21,11 +21,11 @@ type
     printSetupToolStripMenuItem: ToolStripMenuItem;
     toolStripMenuItem2: ToolStripSeparator;
     exitToolStripMenuItem: ToolStripMenuItem;
-    editToolStripMenuItem: ToolStripMenuItem;
-    windowToolStripMenuItem: ToolStripMenuItem;
-    toolStrip1: ToolStrip;
+    mnuEdit: ToolStripMenuItem;
+    mnuWindow: ToolStripMenuItem;
+    toolStrip: ToolStrip;
     toolStripButton1: ToolStripButton;
-    statusStrip1: StatusStrip;
+    statusStrip: StatusStrip;
     lblStatus: ToolStripStatusLabel;
     lblError: ToolStripStatusLabel;
     prgProgress: ToolStripProgressBar;
@@ -79,7 +79,7 @@ type
     toolStripButton13: ToolStripButton;
     toolStripSeparator2: ToolStripSeparator;
     toolStripButton14: ToolStripButton;
-    helpToolStripMenuItem: ToolStripMenuItem;
+    mnuHelp: ToolStripMenuItem;
     {$include MainFormUnit.MainForm.inc}
   {$endregion FormDesigner}
   public
