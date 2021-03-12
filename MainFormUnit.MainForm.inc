@@ -3,9 +3,6 @@ procedure InitializeComponent;
         var resources: System.ComponentModel.ComponentResourceManager := new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         self.menuStrip1 := new System.Windows.Forms.MenuStrip();
         self.fileToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.editToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.windowToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.helpToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
         self.newToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
         self.openToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
         self.saveToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
@@ -15,14 +12,65 @@ procedure InitializeComponent;
         self.printSetupToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem2 := new System.Windows.Forms.ToolStripSeparator();
         self.exitToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.editToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.windowToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.helpToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStrip1 := new System.Windows.Forms.ToolStrip();
         self.toolStripButton1 := new System.Windows.Forms.ToolStripButton();
         self.statusStrip1 := new System.Windows.Forms.StatusStrip();
-        self.toolStripStatusLabel1 := new System.Windows.Forms.ToolStripStatusLabel();
-        self.toolStripStatusLabel2 := new System.Windows.Forms.ToolStripStatusLabel();
-        self.toolStripProgressBar1 := new System.Windows.Forms.ToolStripProgressBar();
-        self.toolStripDropDownButton1 := new System.Windows.Forms.ToolStripDropDownButton();
-        self.toolStripDropDownButton2 := new System.Windows.Forms.ToolStripDropDownButton();
+        self.lblStatus := new System.Windows.Forms.ToolStripStatusLabel();
+        self.lblError := new System.Windows.Forms.ToolStripStatusLabel();
+        self.prgProgress := new System.Windows.Forms.ToolStripProgressBar();
+        self.btnAction := new System.Windows.Forms.ToolStripDropDownButton();
+        self.btnDirty := new System.Windows.Forms.ToolStripDropDownButton();
+        self.undoToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.redoToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem3 := new System.Windows.Forms.ToolStripSeparator();
+        self.cutToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.copyToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.pasteToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem4 := new System.Windows.Forms.ToolStripMenuItem();
+        self.pasteSepcialToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.deleteToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem5 := new System.Windows.Forms.ToolStripSeparator();
+        self.findToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.replaceToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.gotoToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem6 := new System.Windows.Forms.ToolStripSeparator();
+        self.refreshToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem7 := new System.Windows.Forms.ToolStripSeparator();
+        self.propertiesToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.preferencesToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.newWindowToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.tileToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.cascadeToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.arrangeAllToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem8 := new System.Windows.Forms.ToolStripSeparator();
+        self.hideToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.showToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.helpContentsToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.helpIndexToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.helpOnHelpToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.licenceInformationToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.checkForUpdatesToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem9 := new System.Windows.Forms.ToolStripSeparator();
+        self.aboutToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.toolStripMenuItem10 := new System.Windows.Forms.ToolStripSeparator();
+        self.toolStripButton2 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton3 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton4 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripSeparator1 := new System.Windows.Forms.ToolStripSeparator();
+        self.toolStripButton5 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton6 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton7 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton8 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton9 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton10 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton11 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton12 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripButton13 := new System.Windows.Forms.ToolStripButton();
+        self.toolStripSeparator2 := new System.Windows.Forms.ToolStripSeparator();
+        self.toolStripButton14 := new System.Windows.Forms.ToolStripButton();
         self.menuStrip1.SuspendLayout();
         self.toolStrip1.SuspendLayout();
         self.statusStrip1.SuspendLayout();
@@ -33,7 +81,7 @@ procedure InitializeComponent;
         self.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[4](self.fileToolStripMenuItem, self.editToolStripMenuItem, self.windowToolStripMenuItem, self.helpToolStripMenuItem));
         self.menuStrip1.Location := new System.Drawing.Point(0, 0);
         self.menuStrip1.Name := 'menuStrip1';
-        self.menuStrip1.Size := new System.Drawing.Size(476, 24);
+        self.menuStrip1.Size := new System.Drawing.Size(624, 24);
         self.menuStrip1.TabIndex := 0;
         self.menuStrip1.Text := 'menuStrip1';
         // 
@@ -43,24 +91,6 @@ procedure InitializeComponent;
         self.fileToolStripMenuItem.Name := 'fileToolStripMenuItem';
         self.fileToolStripMenuItem.Size := new System.Drawing.Size(37, 20);
         self.fileToolStripMenuItem.Text := '&File';
-        // 
-        // editToolStripMenuItem
-        // 
-        self.editToolStripMenuItem.Name := 'editToolStripMenuItem';
-        self.editToolStripMenuItem.Size := new System.Drawing.Size(39, 20);
-        self.editToolStripMenuItem.Text := '&Edit';
-        // 
-        // windowToolStripMenuItem
-        // 
-        self.windowToolStripMenuItem.Name := 'windowToolStripMenuItem';
-        self.windowToolStripMenuItem.Size := new System.Drawing.Size(63, 20);
-        self.windowToolStripMenuItem.Text := '&Window';
-        // 
-        // helpToolStripMenuItem
-        // 
-        self.helpToolStripMenuItem.Name := 'helpToolStripMenuItem';
-        self.helpToolStripMenuItem.Size := new System.Drawing.Size(44, 20);
-        self.helpToolStripMenuItem.Text := '&Help';
         // 
         // newToolStripMenuItem
         // 
@@ -114,12 +144,33 @@ procedure InitializeComponent;
         self.exitToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
         self.exitToolStripMenuItem.Text := 'E&xit';
         // 
+        // editToolStripMenuItem
+        // 
+        self.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[18](self.undoToolStripMenuItem, self.redoToolStripMenuItem, self.toolStripMenuItem3, self.toolStripMenuItem4, self.cutToolStripMenuItem, self.copyToolStripMenuItem, self.pasteToolStripMenuItem, self.pasteSepcialToolStripMenuItem, self.deleteToolStripMenuItem, self.toolStripMenuItem5, self.findToolStripMenuItem, self.replaceToolStripMenuItem, self.gotoToolStripMenuItem, self.toolStripMenuItem6, self.refreshToolStripMenuItem, self.toolStripMenuItem7, self.propertiesToolStripMenuItem, self.preferencesToolStripMenuItem));
+        self.editToolStripMenuItem.Name := 'editToolStripMenuItem';
+        self.editToolStripMenuItem.Size := new System.Drawing.Size(39, 20);
+        self.editToolStripMenuItem.Text := '&Edit';
+        // 
+        // windowToolStripMenuItem
+        // 
+        self.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[7](self.newWindowToolStripMenuItem, self.tileToolStripMenuItem, self.cascadeToolStripMenuItem, self.arrangeAllToolStripMenuItem, self.toolStripMenuItem8, self.hideToolStripMenuItem, self.showToolStripMenuItem));
+        self.windowToolStripMenuItem.Name := 'windowToolStripMenuItem';
+        self.windowToolStripMenuItem.Size := new System.Drawing.Size(63, 20);
+        self.windowToolStripMenuItem.Text := '&Window';
+        // 
+        // helpToolStripMenuItem
+        // 
+        self.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[8](self.helpContentsToolStripMenuItem, self.helpIndexToolStripMenuItem, self.helpOnHelpToolStripMenuItem, self.toolStripMenuItem10, self.licenceInformationToolStripMenuItem, self.checkForUpdatesToolStripMenuItem, self.toolStripMenuItem9, self.aboutToolStripMenuItem));
+        self.helpToolStripMenuItem.Name := 'helpToolStripMenuItem';
+        self.helpToolStripMenuItem.Size := new System.Drawing.Size(44, 20);
+        self.helpToolStripMenuItem.Text := '&Help';
+        // 
         // toolStrip1
         // 
-        self.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[1](self.toolStripButton1));
+        self.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[16](self.toolStripButton1, self.toolStripButton2, self.toolStripButton3, self.toolStripButton4, self.toolStripSeparator1, self.toolStripButton5, self.toolStripButton6, self.toolStripButton7, self.toolStripButton8, self.toolStripButton9, self.toolStripButton10, self.toolStripButton11, self.toolStripButton12, self.toolStripButton13, self.toolStripSeparator2, self.toolStripButton14));
         self.toolStrip1.Location := new System.Drawing.Point(0, 24);
         self.toolStrip1.Name := 'toolStrip1';
-        self.toolStrip1.Size := new System.Drawing.Size(476, 25);
+        self.toolStrip1.Size := new System.Drawing.Size(624, 25);
         self.toolStrip1.TabIndex := 1;
         self.toolStrip1.Text := 'toolStrip1';
         // 
@@ -131,60 +182,382 @@ procedure InitializeComponent;
         self.toolStripButton1.Name := 'toolStripButton1';
         self.toolStripButton1.Size := new System.Drawing.Size(23, 22);
         self.toolStripButton1.Text := 'toolStripButton1';
+        self.toolStripButton1.ToolTipText := 'New';
         // 
         // statusStrip1
         // 
-        self.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[5](self.toolStripStatusLabel1, self.toolStripStatusLabel2, self.toolStripProgressBar1, self.toolStripDropDownButton1, self.toolStripDropDownButton2));
-        self.statusStrip1.Location := new System.Drawing.Point(0, 350);
+        self.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[5](self.lblStatus, self.lblError, self.prgProgress, self.btnAction, self.btnDirty));
+        self.statusStrip1.Location := new System.Drawing.Point(0, 420);
         self.statusStrip1.Name := 'statusStrip1';
-        self.statusStrip1.Size := new System.Drawing.Size(476, 22);
+        self.statusStrip1.Size := new System.Drawing.Size(624, 22);
         self.statusStrip1.TabIndex := 2;
         self.statusStrip1.Text := 'statusStrip1';
         // 
-        // toolStripStatusLabel1
+        // lblStatus
         // 
-        self.toolStripStatusLabel1.Name := 'toolStripStatusLabel1';
-        self.toolStripStatusLabel1.Size := new System.Drawing.Size(118, 17);
-        self.toolStripStatusLabel1.Text := 'toolStripStatusLabel1';
+        self.lblStatus.ForeColor := System.Drawing.Color.Green;
+        self.lblStatus.Name := 'lblStatus';
+        self.lblStatus.Size := new System.Drawing.Size(39, 17);
+        self.lblStatus.Text := 'Status';
         // 
-        // toolStripStatusLabel2
+        // lblError
         // 
-        self.toolStripStatusLabel2.Name := 'toolStripStatusLabel2';
-        self.toolStripStatusLabel2.Size := new System.Drawing.Size(118, 17);
-        self.toolStripStatusLabel2.Text := 'toolStripStatusLabel2';
+        self.lblError.ForeColor := System.Drawing.Color.Red;
+        self.lblError.Name := 'lblError';
+        self.lblError.Size := new System.Drawing.Size(32, 17);
+        self.lblError.Text := 'Error';
         // 
-        // toolStripProgressBar1
+        // prgProgress
         // 
-        self.toolStripProgressBar1.Name := 'toolStripProgressBar1';
-        self.toolStripProgressBar1.Size := new System.Drawing.Size(100, 16);
+        self.prgProgress.Name := 'prgProgress';
+        self.prgProgress.Size := new System.Drawing.Size(100, 16);
         // 
-        // toolStripDropDownButton1
+        // btnAction
         // 
-        self.toolStripDropDownButton1.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripDropDownButton1.Image := (System.Drawing.Image(resources.GetObject('toolStripDropDownButton1.Image')));
-        self.toolStripDropDownButton1.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripDropDownButton1.Name := 'toolStripDropDownButton1';
-        self.toolStripDropDownButton1.Size := new System.Drawing.Size(29, 20);
-        self.toolStripDropDownButton1.Text := 'toolStripDropDownButton1';
+        self.btnAction.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnAction.Image := (System.Drawing.Image(resources.GetObject('btnAction.Image')));
+        self.btnAction.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnAction.Name := 'btnAction';
+        self.btnAction.Size := new System.Drawing.Size(29, 20);
+        self.btnAction.Text := 'toolStripDropDownButton1';
         // 
-        // toolStripDropDownButton2
+        // btnDirty
         // 
-        self.toolStripDropDownButton2.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripDropDownButton2.Image := (System.Drawing.Image(resources.GetObject('toolStripDropDownButton2.Image')));
-        self.toolStripDropDownButton2.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripDropDownButton2.Name := 'toolStripDropDownButton2';
-        self.toolStripDropDownButton2.Size := new System.Drawing.Size(29, 20);
-        self.toolStripDropDownButton2.Text := 'toolStripDropDownButton2';
+        self.btnDirty.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnDirty.Image := (System.Drawing.Image(resources.GetObject('btnDirty.Image')));
+        self.btnDirty.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnDirty.Name := 'btnDirty';
+        self.btnDirty.Size := new System.Drawing.Size(29, 20);
+        self.btnDirty.Text := 'toolStripDropDownButton2';
+        // 
+        // undoToolStripMenuItem
+        // 
+        self.undoToolStripMenuItem.Name := 'undoToolStripMenuItem';
+        self.undoToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.undoToolStripMenuItem.Text := '&Undo';
+        // 
+        // redoToolStripMenuItem
+        // 
+        self.redoToolStripMenuItem.Name := 'redoToolStripMenuItem';
+        self.redoToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.redoToolStripMenuItem.Text := '&Redo';
+        // 
+        // toolStripMenuItem3
+        // 
+        self.toolStripMenuItem3.Name := 'toolStripMenuItem3';
+        self.toolStripMenuItem3.Size := new System.Drawing.Size(149, 6);
+        // 
+        // cutToolStripMenuItem
+        // 
+        self.cutToolStripMenuItem.Name := 'cutToolStripMenuItem';
+        self.cutToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.cutToolStripMenuItem.Text := 'Cu&t';
+        // 
+        // copyToolStripMenuItem
+        // 
+        self.copyToolStripMenuItem.Name := 'copyToolStripMenuItem';
+        self.copyToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.copyToolStripMenuItem.Text := '&Copy';
+        // 
+        // pasteToolStripMenuItem
+        // 
+        self.pasteToolStripMenuItem.Name := 'pasteToolStripMenuItem';
+        self.pasteToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.pasteToolStripMenuItem.Text := '&Paste';
+        // 
+        // toolStripMenuItem4
+        // 
+        self.toolStripMenuItem4.Name := 'toolStripMenuItem4';
+        self.toolStripMenuItem4.Size := new System.Drawing.Size(152, 22);
+        self.toolStripMenuItem4.Text := 'Select &All';
+        // 
+        // pasteSepcialToolStripMenuItem
+        // 
+        self.pasteSepcialToolStripMenuItem.Name := 'pasteSepcialToolStripMenuItem';
+        self.pasteSepcialToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.pasteSepcialToolStripMenuItem.Text := 'Paste &Special...';
+        self.pasteSepcialToolStripMenuItem.Click += pasteSepcialToolStripMenuItem_Click;
+        // 
+        // deleteToolStripMenuItem
+        // 
+        self.deleteToolStripMenuItem.Name := 'deleteToolStripMenuItem';
+        self.deleteToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.deleteToolStripMenuItem.Text := '&Delete';
+        // 
+        // toolStripMenuItem5
+        // 
+        self.toolStripMenuItem5.Name := 'toolStripMenuItem5';
+        self.toolStripMenuItem5.Size := new System.Drawing.Size(149, 6);
+        // 
+        // findToolStripMenuItem
+        // 
+        self.findToolStripMenuItem.Name := 'findToolStripMenuItem';
+        self.findToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.findToolStripMenuItem.Text := '&Find...';
+        // 
+        // replaceToolStripMenuItem
+        // 
+        self.replaceToolStripMenuItem.Name := 'replaceToolStripMenuItem';
+        self.replaceToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.replaceToolStripMenuItem.Text := 'Rep&lace...';
+        // 
+        // gotoToolStripMenuItem
+        // 
+        self.gotoToolStripMenuItem.Name := 'gotoToolStripMenuItem';
+        self.gotoToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.gotoToolStripMenuItem.Text := '&Go To...';
+        // 
+        // toolStripMenuItem6
+        // 
+        self.toolStripMenuItem6.Name := 'toolStripMenuItem6';
+        self.toolStripMenuItem6.Size := new System.Drawing.Size(149, 6);
+        // 
+        // refreshToolStripMenuItem
+        // 
+        self.refreshToolStripMenuItem.Name := 'refreshToolStripMenuItem';
+        self.refreshToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.refreshToolStripMenuItem.Text := 'R&efresh';
+        // 
+        // toolStripMenuItem7
+        // 
+        self.toolStripMenuItem7.Name := 'toolStripMenuItem7';
+        self.toolStripMenuItem7.Size := new System.Drawing.Size(149, 6);
+        // 
+        // propertiesToolStripMenuItem
+        // 
+        self.propertiesToolStripMenuItem.Name := 'propertiesToolStripMenuItem';
+        self.propertiesToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.propertiesToolStripMenuItem.Text := 'Pr&operties...';
+        // 
+        // preferencesToolStripMenuItem
+        // 
+        self.preferencesToolStripMenuItem.Name := 'preferencesToolStripMenuItem';
+        self.preferencesToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.preferencesToolStripMenuItem.Text := 'Pr&eferences...';
+        // 
+        // newWindowToolStripMenuItem
+        // 
+        self.newWindowToolStripMenuItem.Name := 'newWindowToolStripMenuItem';
+        self.newWindowToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.newWindowToolStripMenuItem.Text := '&New Window';
+        // 
+        // tileToolStripMenuItem
+        // 
+        self.tileToolStripMenuItem.Name := 'tileToolStripMenuItem';
+        self.tileToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.tileToolStripMenuItem.Text := '&Tile';
+        // 
+        // cascadeToolStripMenuItem
+        // 
+        self.cascadeToolStripMenuItem.Name := 'cascadeToolStripMenuItem';
+        self.cascadeToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.cascadeToolStripMenuItem.Text := '&Cascade';
+        // 
+        // arrangeAllToolStripMenuItem
+        // 
+        self.arrangeAllToolStripMenuItem.Name := 'arrangeAllToolStripMenuItem';
+        self.arrangeAllToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.arrangeAllToolStripMenuItem.Text := '&Arrange All';
+        // 
+        // toolStripMenuItem8
+        // 
+        self.toolStripMenuItem8.Name := 'toolStripMenuItem8';
+        self.toolStripMenuItem8.Size := new System.Drawing.Size(149, 6);
+        // 
+        // hideToolStripMenuItem
+        // 
+        self.hideToolStripMenuItem.Name := 'hideToolStripMenuItem';
+        self.hideToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.hideToolStripMenuItem.Text := '&Hide';
+        // 
+        // showToolStripMenuItem
+        // 
+        self.showToolStripMenuItem.Name := 'showToolStripMenuItem';
+        self.showToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
+        self.showToolStripMenuItem.Text := '&Show';
+        // 
+        // helpContentsToolStripMenuItem
+        // 
+        self.helpContentsToolStripMenuItem.Name := 'helpContentsToolStripMenuItem';
+        self.helpContentsToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
+        self.helpContentsToolStripMenuItem.Text := 'Help &Contents';
+        // 
+        // helpIndexToolStripMenuItem
+        // 
+        self.helpIndexToolStripMenuItem.Name := 'helpIndexToolStripMenuItem';
+        self.helpIndexToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
+        self.helpIndexToolStripMenuItem.Text := 'Help &Index';
+        // 
+        // helpOnHelpToolStripMenuItem
+        // 
+        self.helpOnHelpToolStripMenuItem.Name := 'helpOnHelpToolStripMenuItem';
+        self.helpOnHelpToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
+        self.helpOnHelpToolStripMenuItem.Text := 'Help &On Help';
+        // 
+        // licenceInformationToolStripMenuItem
+        // 
+        self.licenceInformationToolStripMenuItem.Name := 'licenceInformationToolStripMenuItem';
+        self.licenceInformationToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
+        self.licenceInformationToolStripMenuItem.Text := '&Licence Information';
+        // 
+        // checkForUpdatesToolStripMenuItem
+        // 
+        self.checkForUpdatesToolStripMenuItem.Name := 'checkForUpdatesToolStripMenuItem';
+        self.checkForUpdatesToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
+        self.checkForUpdatesToolStripMenuItem.Text := '&Check for Updates';
+        // 
+        // toolStripMenuItem9
+        // 
+        self.toolStripMenuItem9.Name := 'toolStripMenuItem9';
+        self.toolStripMenuItem9.Size := new System.Drawing.Size(177, 6);
+        // 
+        // aboutToolStripMenuItem
+        // 
+        self.aboutToolStripMenuItem.Name := 'aboutToolStripMenuItem';
+        self.aboutToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
+        self.aboutToolStripMenuItem.Text := '&About...';
+        // 
+        // toolStripMenuItem10
+        // 
+        self.toolStripMenuItem10.Name := 'toolStripMenuItem10';
+        self.toolStripMenuItem10.Size := new System.Drawing.Size(177, 6);
+        // 
+        // toolStripButton2
+        // 
+        self.toolStripButton2.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton2.Image := (System.Drawing.Image(resources.GetObject('toolStripButton2.Image')));
+        self.toolStripButton2.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton2.Name := 'toolStripButton2';
+        self.toolStripButton2.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton2.Text := 'Open';
+        // 
+        // toolStripButton3
+        // 
+        self.toolStripButton3.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton3.Image := (System.Drawing.Image(resources.GetObject('toolStripButton3.Image')));
+        self.toolStripButton3.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton3.Name := 'toolStripButton3';
+        self.toolStripButton3.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton3.Text := 'Save';
+        // 
+        // toolStripButton4
+        // 
+        self.toolStripButton4.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton4.Image := (System.Drawing.Image(resources.GetObject('toolStripButton4.Image')));
+        self.toolStripButton4.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton4.Name := 'toolStripButton4';
+        self.toolStripButton4.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton4.Text := 'Print';
+        // 
+        // toolStripSeparator1
+        // 
+        self.toolStripSeparator1.Name := 'toolStripSeparator1';
+        self.toolStripSeparator1.Size := new System.Drawing.Size(6, 25);
+        // 
+        // toolStripButton5
+        // 
+        self.toolStripButton5.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton5.Image := (System.Drawing.Image(resources.GetObject('toolStripButton5.Image')));
+        self.toolStripButton5.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton5.Name := 'toolStripButton5';
+        self.toolStripButton5.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton5.Text := 'Undo';
+        // 
+        // toolStripButton6
+        // 
+        self.toolStripButton6.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton6.Image := (System.Drawing.Image(resources.GetObject('toolStripButton6.Image')));
+        self.toolStripButton6.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton6.Name := 'toolStripButton6';
+        self.toolStripButton6.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton6.Text := 'Redo';
+        // 
+        // toolStripButton7
+        // 
+        self.toolStripButton7.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton7.Image := (System.Drawing.Image(resources.GetObject('toolStripButton7.Image')));
+        self.toolStripButton7.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton7.Name := 'toolStripButton7';
+        self.toolStripButton7.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton7.Text := 'Cut';
+        // 
+        // toolStripButton8
+        // 
+        self.toolStripButton8.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton8.Image := (System.Drawing.Image(resources.GetObject('toolStripButton8.Image')));
+        self.toolStripButton8.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton8.Name := 'toolStripButton8';
+        self.toolStripButton8.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton8.Text := 'Copy';
+        // 
+        // toolStripButton9
+        // 
+        self.toolStripButton9.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton9.Image := (System.Drawing.Image(resources.GetObject('toolStripButton9.Image')));
+        self.toolStripButton9.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton9.Name := 'toolStripButton9';
+        self.toolStripButton9.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton9.Text := 'Paste';
+        // 
+        // toolStripButton10
+        // 
+        self.toolStripButton10.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton10.Image := (System.Drawing.Image(resources.GetObject('toolStripButton10.Image')));
+        self.toolStripButton10.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton10.Name := 'toolStripButton10';
+        self.toolStripButton10.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton10.Text := 'Find';
+        // 
+        // toolStripButton11
+        // 
+        self.toolStripButton11.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton11.Image := (System.Drawing.Image(resources.GetObject('toolStripButton11.Image')));
+        self.toolStripButton11.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton11.Name := 'toolStripButton11';
+        self.toolStripButton11.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton11.Text := 'Replace';
+        // 
+        // toolStripButton12
+        // 
+        self.toolStripButton12.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton12.Image := (System.Drawing.Image(resources.GetObject('toolStripButton12.Image')));
+        self.toolStripButton12.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton12.Name := 'toolStripButton12';
+        self.toolStripButton12.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton12.Text := 'Refresh';
+        // 
+        // toolStripButton13
+        // 
+        self.toolStripButton13.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton13.Image := (System.Drawing.Image(resources.GetObject('toolStripButton13.Image')));
+        self.toolStripButton13.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton13.Name := 'toolStripButton13';
+        self.toolStripButton13.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton13.Text := 'Preferences';
+        // 
+        // toolStripSeparator2
+        // 
+        self.toolStripSeparator2.Name := 'toolStripSeparator2';
+        self.toolStripSeparator2.Size := new System.Drawing.Size(6, 25);
+        // 
+        // toolStripButton14
+        // 
+        self.toolStripButton14.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.toolStripButton14.Image := (System.Drawing.Image(resources.GetObject('toolStripButton14.Image')));
+        self.toolStripButton14.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.toolStripButton14.Name := 'toolStripButton14';
+        self.toolStripButton14.Size := new System.Drawing.Size(23, 22);
+        self.toolStripButton14.Text := 'Help';
         // 
         // MainForm
         // 
-        self.ClientSize := new System.Drawing.Size(476, 372);
+        self.ClientSize := new System.Drawing.Size(624, 442);
         self.Controls.Add(self.statusStrip1);
         self.Controls.Add(self.toolStrip1);
         self.Controls.Add(self.menuStrip1);
         self.MainMenuStrip := self.menuStrip1;
         self.Name := 'MainForm';
-        self.Text := 'MainForm';
+        self.Text := '(new) - Pascal Generic GUI w/ PascalABC';
         self.menuStrip1.ResumeLayout(false);
         self.menuStrip1.PerformLayout();
         self.toolStrip1.ResumeLayout(false);
