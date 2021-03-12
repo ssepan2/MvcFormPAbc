@@ -3,68 +3,68 @@ procedure InitializeComponent;
         var resources: System.ComponentModel.ComponentResourceManager := new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         self.menuStrip := new System.Windows.Forms.MenuStrip();
         self.mnuFile := new System.Windows.Forms.ToolStripMenuItem();
-        self.newToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.openToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.saveToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.saveAsToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFileNew := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFileOpen := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFileSave := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFileSaveAs := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem1 := new System.Windows.Forms.ToolStripSeparator();
-        self.printToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.printSetupToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFilePrint := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFilePrintSetup := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem2 := new System.Windows.Forms.ToolStripSeparator();
-        self.exitToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuFileExit := new System.Windows.Forms.ToolStripMenuItem();
         self.mnuEdit := new System.Windows.Forms.ToolStripMenuItem();
-        self.undoToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.redoToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditUndo := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditRedo := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem3 := new System.Windows.Forms.ToolStripSeparator();
-        self.toolStripMenuItem4 := new System.Windows.Forms.ToolStripMenuItem();
-        self.cutToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.copyToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.pasteToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.pasteSepcialToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.deleteToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditSelectAll := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditCut := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditCopy := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditPaste := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditPasteSpecial := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditDelete := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem5 := new System.Windows.Forms.ToolStripSeparator();
-        self.findToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.replaceToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.gotoToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditFind := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditReplace := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditGoto := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem6 := new System.Windows.Forms.ToolStripSeparator();
-        self.refreshToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditRefresh := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem7 := new System.Windows.Forms.ToolStripSeparator();
-        self.propertiesToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.preferencesToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditProperties := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuEditPreferences := new System.Windows.Forms.ToolStripMenuItem();
         self.mnuWindow := new System.Windows.Forms.ToolStripMenuItem();
-        self.newWindowToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.tileToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.cascadeToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.arrangeAllToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuWindowNewWindow := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuWindowTile := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuWindowCascade := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuWindowArrangeAll := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem8 := new System.Windows.Forms.ToolStripSeparator();
-        self.hideToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.showToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuWindowHide := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuWindowShow := new System.Windows.Forms.ToolStripMenuItem();
         self.mnuHelp := new System.Windows.Forms.ToolStripMenuItem();
-        self.helpContentsToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.helpIndexToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.helpOnHelpToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuHelpHelpContents := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuHelpHelpIndex := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuHelpHelpOnHelp := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem10 := new System.Windows.Forms.ToolStripSeparator();
-        self.licenceInformationToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
-        self.checkForUpdatesToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuHelpLicenceInformation := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuHelpCheckForUpdates := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStripMenuItem9 := new System.Windows.Forms.ToolStripSeparator();
-        self.aboutToolStripMenuItem := new System.Windows.Forms.ToolStripMenuItem();
+        self.mnuHelpAbout := new System.Windows.Forms.ToolStripMenuItem();
         self.toolStrip := new System.Windows.Forms.ToolStrip();
-        self.toolStripButton1 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton2 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton3 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton4 := new System.Windows.Forms.ToolStripButton();
+        self.btnFileNew := new System.Windows.Forms.ToolStripButton();
+        self.btnFileOpen := new System.Windows.Forms.ToolStripButton();
+        self.btnFileSave := new System.Windows.Forms.ToolStripButton();
+        self.btnFilePrint := new System.Windows.Forms.ToolStripButton();
         self.toolStripSeparator1 := new System.Windows.Forms.ToolStripSeparator();
-        self.toolStripButton5 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton6 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton7 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton8 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton9 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton10 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton11 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton12 := new System.Windows.Forms.ToolStripButton();
-        self.toolStripButton13 := new System.Windows.Forms.ToolStripButton();
+        self.btnEditUndo := new System.Windows.Forms.ToolStripButton();
+        self.btnEditRedo := new System.Windows.Forms.ToolStripButton();
+        self.btnEditCut := new System.Windows.Forms.ToolStripButton();
+        self.btnEditCopy := new System.Windows.Forms.ToolStripButton();
+        self.btnEditPaste := new System.Windows.Forms.ToolStripButton();
+        self.btnEditFind := new System.Windows.Forms.ToolStripButton();
+        self.btnEditReplace := new System.Windows.Forms.ToolStripButton();
+        self.btnEditRefresh := new System.Windows.Forms.ToolStripButton();
+        self.btnEditPreferences := new System.Windows.Forms.ToolStripButton();
         self.toolStripSeparator2 := new System.Windows.Forms.ToolStripSeparator();
-        self.toolStripButton14 := new System.Windows.Forms.ToolStripButton();
+        self.btnHelpContents := new System.Windows.Forms.ToolStripButton();
         self.statusStrip := new System.Windows.Forms.StatusStrip();
         self.lblStatus := new System.Windows.Forms.ToolStripStatusLabel();
         self.lblError := new System.Windows.Forms.ToolStripStatusLabel();
@@ -87,437 +87,483 @@ procedure InitializeComponent;
         // 
         // mnuFile
         // 
-        self.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[9](self.newToolStripMenuItem, self.openToolStripMenuItem, self.saveToolStripMenuItem, self.saveAsToolStripMenuItem, self.toolStripMenuItem1, self.printToolStripMenuItem, self.printSetupToolStripMenuItem, self.toolStripMenuItem2, self.exitToolStripMenuItem));
+        self.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[9](self.mnuFileNew, self.mnuFileOpen, self.mnuFileSave, self.mnuFileSaveAs, self.toolStripMenuItem1, self.mnuFilePrint, self.mnuFilePrintSetup, self.toolStripMenuItem2, self.mnuFileExit));
         self.mnuFile.Name := 'mnuFile';
         self.mnuFile.Size := new System.Drawing.Size(37, 20);
         self.mnuFile.Text := '&File';
         // 
-        // newToolStripMenuItem
+        // mnuFileNew
         // 
-        self.newToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('newToolStripMenuItem.Image')));
-        self.newToolStripMenuItem.Name := 'newToolStripMenuItem';
-        self.newToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.newToolStripMenuItem.Text := '&New';
+        self.mnuFileNew.Image := (System.Drawing.Image(resources.GetObject('mnuFileNew.Image')));
+        self.mnuFileNew.Name := 'mnuFileNew';
+        self.mnuFileNew.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileNew.Text := '&New';
+        self.mnuFileNew.Click += mnuFileNew_Click;
         // 
-        // openToolStripMenuItem
+        // mnuFileOpen
         // 
-        self.openToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('openToolStripMenuItem.Image')));
-        self.openToolStripMenuItem.Name := 'openToolStripMenuItem';
-        self.openToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.openToolStripMenuItem.Text := '&Open';
+        self.mnuFileOpen.Image := (System.Drawing.Image(resources.GetObject('mnuFileOpen.Image')));
+        self.mnuFileOpen.Name := 'mnuFileOpen';
+        self.mnuFileOpen.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileOpen.Text := '&Open';
+        self.mnuFileOpen.Click += mnuFileOpen_Click;
         // 
-        // saveToolStripMenuItem
+        // mnuFileSave
         // 
-        self.saveToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('saveToolStripMenuItem.Image')));
-        self.saveToolStripMenuItem.Name := 'saveToolStripMenuItem';
-        self.saveToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.saveToolStripMenuItem.Text := '&Save';
+        self.mnuFileSave.Image := (System.Drawing.Image(resources.GetObject('mnuFileSave.Image')));
+        self.mnuFileSave.Name := 'mnuFileSave';
+        self.mnuFileSave.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileSave.Text := '&Save';
+        self.mnuFileSave.Click += mnuFileSave_Click;
         // 
-        // saveAsToolStripMenuItem
+        // mnuFileSaveAs
         // 
-        self.saveAsToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('saveAsToolStripMenuItem.Image')));
-        self.saveAsToolStripMenuItem.Name := 'saveAsToolStripMenuItem';
-        self.saveAsToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.saveAsToolStripMenuItem.Text := 'Save &As...';
+        self.mnuFileSaveAs.Image := (System.Drawing.Image(resources.GetObject('mnuFileSaveAs.Image')));
+        self.mnuFileSaveAs.Name := 'mnuFileSaveAs';
+        self.mnuFileSaveAs.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileSaveAs.Text := 'Save &As...';
+        self.mnuFileSaveAs.Click += mnuFileSaveAs_Click;
         // 
         // toolStripMenuItem1
         // 
         self.toolStripMenuItem1.Name := 'toolStripMenuItem1';
         self.toolStripMenuItem1.Size := new System.Drawing.Size(149, 6);
         // 
-        // printToolStripMenuItem
+        // mnuFilePrint
         // 
-        self.printToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('printToolStripMenuItem.Image')));
-        self.printToolStripMenuItem.Name := 'printToolStripMenuItem';
-        self.printToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.printToolStripMenuItem.Text := '&Print';
+        self.mnuFilePrint.Image := (System.Drawing.Image(resources.GetObject('mnuFilePrint.Image')));
+        self.mnuFilePrint.Name := 'mnuFilePrint';
+        self.mnuFilePrint.Size := new System.Drawing.Size(152, 22);
+        self.mnuFilePrint.Text := '&Print';
+        self.mnuFilePrint.Click += mnuFilePrint_Click;
         // 
-        // printSetupToolStripMenuItem
+        // mnuFilePrintSetup
         // 
-        self.printSetupToolStripMenuItem.Name := 'printSetupToolStripMenuItem';
-        self.printSetupToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.printSetupToolStripMenuItem.Text := 'P&rint Setup...';
+        self.mnuFilePrintSetup.Name := 'mnuFilePrintSetup';
+        self.mnuFilePrintSetup.Size := new System.Drawing.Size(152, 22);
+        self.mnuFilePrintSetup.Text := 'P&rint Setup...';
+        self.mnuFilePrintSetup.Click += mnuFilePrintSetup_Click;
         // 
         // toolStripMenuItem2
         // 
         self.toolStripMenuItem2.Name := 'toolStripMenuItem2';
         self.toolStripMenuItem2.Size := new System.Drawing.Size(149, 6);
         // 
-        // exitToolStripMenuItem
+        // mnuFileExit
         // 
-        self.exitToolStripMenuItem.Name := 'exitToolStripMenuItem';
-        self.exitToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.exitToolStripMenuItem.Text := 'E&xit';
+        self.mnuFileExit.Name := 'mnuFileExit';
+        self.mnuFileExit.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileExit.Text := 'E&xit';
+        self.mnuFileExit.Click += mnuFileExit_Click;
         // 
         // mnuEdit
         // 
-        self.mnuEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[18](self.undoToolStripMenuItem, self.redoToolStripMenuItem, self.toolStripMenuItem3, self.toolStripMenuItem4, self.cutToolStripMenuItem, self.copyToolStripMenuItem, self.pasteToolStripMenuItem, self.pasteSepcialToolStripMenuItem, self.deleteToolStripMenuItem, self.toolStripMenuItem5, self.findToolStripMenuItem, self.replaceToolStripMenuItem, self.gotoToolStripMenuItem, self.toolStripMenuItem6, self.refreshToolStripMenuItem, self.toolStripMenuItem7, self.propertiesToolStripMenuItem, self.preferencesToolStripMenuItem));
+        self.mnuEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[18](self.mnuEditUndo, self.mnuEditRedo, self.toolStripMenuItem3, self.mnuEditSelectAll, self.mnuEditCut, self.mnuEditCopy, self.mnuEditPaste, self.mnuEditPasteSpecial, self.mnuEditDelete, self.toolStripMenuItem5, self.mnuEditFind, self.mnuEditReplace, self.mnuEditGoto, self.toolStripMenuItem6, self.mnuEditRefresh, self.toolStripMenuItem7, self.mnuEditProperties, self.mnuEditPreferences));
         self.mnuEdit.Name := 'mnuEdit';
         self.mnuEdit.Size := new System.Drawing.Size(39, 20);
         self.mnuEdit.Text := '&Edit';
         // 
-        // undoToolStripMenuItem
+        // mnuEditUndo
         // 
-        self.undoToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('undoToolStripMenuItem.Image')));
-        self.undoToolStripMenuItem.Name := 'undoToolStripMenuItem';
-        self.undoToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.undoToolStripMenuItem.Text := '&Undo';
+        self.mnuEditUndo.Image := (System.Drawing.Image(resources.GetObject('mnuEditUndo.Image')));
+        self.mnuEditUndo.Name := 'mnuEditUndo';
+        self.mnuEditUndo.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditUndo.Text := '&Undo';
+        self.mnuEditUndo.Click += mnuEditUndo_Click;
         // 
-        // redoToolStripMenuItem
+        // mnuEditRedo
         // 
-        self.redoToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('redoToolStripMenuItem.Image')));
-        self.redoToolStripMenuItem.Name := 'redoToolStripMenuItem';
-        self.redoToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.redoToolStripMenuItem.Text := '&Redo';
+        self.mnuEditRedo.Image := (System.Drawing.Image(resources.GetObject('mnuEditRedo.Image')));
+        self.mnuEditRedo.Name := 'mnuEditRedo';
+        self.mnuEditRedo.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditRedo.Text := '&Redo';
+        self.mnuEditRedo.Click += mnuEditRedo_Click;
         // 
         // toolStripMenuItem3
         // 
         self.toolStripMenuItem3.Name := 'toolStripMenuItem3';
         self.toolStripMenuItem3.Size := new System.Drawing.Size(149, 6);
         // 
-        // toolStripMenuItem4
+        // mnuEditSelectAll
         // 
-        self.toolStripMenuItem4.Name := 'toolStripMenuItem4';
-        self.toolStripMenuItem4.Size := new System.Drawing.Size(152, 22);
-        self.toolStripMenuItem4.Text := 'Select &All';
+        self.mnuEditSelectAll.Name := 'mnuEditSelectAll';
+        self.mnuEditSelectAll.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditSelectAll.Text := 'Select &All';
+        self.mnuEditSelectAll.Click += mnuEditSelectAll_Click;
         // 
-        // cutToolStripMenuItem
+        // mnuEditCut
         // 
-        self.cutToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('cutToolStripMenuItem.Image')));
-        self.cutToolStripMenuItem.Name := 'cutToolStripMenuItem';
-        self.cutToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.cutToolStripMenuItem.Text := 'Cu&t';
+        self.mnuEditCut.Image := (System.Drawing.Image(resources.GetObject('mnuEditCut.Image')));
+        self.mnuEditCut.Name := 'mnuEditCut';
+        self.mnuEditCut.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditCut.Text := 'Cu&t';
+        self.mnuEditCut.Click += mnuEditCut_Click;
         // 
-        // copyToolStripMenuItem
+        // mnuEditCopy
         // 
-        self.copyToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('copyToolStripMenuItem.Image')));
-        self.copyToolStripMenuItem.Name := 'copyToolStripMenuItem';
-        self.copyToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.copyToolStripMenuItem.Text := '&Copy';
+        self.mnuEditCopy.Image := (System.Drawing.Image(resources.GetObject('mnuEditCopy.Image')));
+        self.mnuEditCopy.Name := 'mnuEditCopy';
+        self.mnuEditCopy.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditCopy.Text := '&Copy';
+        self.mnuEditCopy.Click += mnuEditCopy_Click;
         // 
-        // pasteToolStripMenuItem
+        // mnuEditPaste
         // 
-        self.pasteToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('pasteToolStripMenuItem.Image')));
-        self.pasteToolStripMenuItem.Name := 'pasteToolStripMenuItem';
-        self.pasteToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.pasteToolStripMenuItem.Text := '&Paste';
+        self.mnuEditPaste.Image := (System.Drawing.Image(resources.GetObject('mnuEditPaste.Image')));
+        self.mnuEditPaste.Name := 'mnuEditPaste';
+        self.mnuEditPaste.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditPaste.Text := '&Paste';
+        self.mnuEditPaste.Click += mnuEditPaste_Click;
         // 
-        // pasteSepcialToolStripMenuItem
+        // mnuEditPasteSpecial
         // 
-        self.pasteSepcialToolStripMenuItem.Name := 'pasteSepcialToolStripMenuItem';
-        self.pasteSepcialToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.pasteSepcialToolStripMenuItem.Text := 'Paste &Special...';
-        self.pasteSepcialToolStripMenuItem.Click += pasteSepcialToolStripMenuItem_Click;
+        self.mnuEditPasteSpecial.Name := 'mnuEditPasteSpecial';
+        self.mnuEditPasteSpecial.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditPasteSpecial.Text := 'Paste &Special...';
+        self.mnuEditPasteSpecial.Click += mnuEditPasteSpecial_Click;
         // 
-        // deleteToolStripMenuItem
+        // mnuEditDelete
         // 
-        self.deleteToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('deleteToolStripMenuItem.Image')));
-        self.deleteToolStripMenuItem.Name := 'deleteToolStripMenuItem';
-        self.deleteToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.deleteToolStripMenuItem.Text := '&Delete';
+        self.mnuEditDelete.Image := (System.Drawing.Image(resources.GetObject('mnuEditDelete.Image')));
+        self.mnuEditDelete.Name := 'mnuEditDelete';
+        self.mnuEditDelete.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditDelete.Text := '&Delete';
+        self.mnuEditDelete.Click += mnuEditDelete_Click;
         // 
         // toolStripMenuItem5
         // 
         self.toolStripMenuItem5.Name := 'toolStripMenuItem5';
         self.toolStripMenuItem5.Size := new System.Drawing.Size(149, 6);
         // 
-        // findToolStripMenuItem
+        // mnuEditFind
         // 
-        self.findToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('findToolStripMenuItem.Image')));
-        self.findToolStripMenuItem.Name := 'findToolStripMenuItem';
-        self.findToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.findToolStripMenuItem.Text := '&Find...';
+        self.mnuEditFind.Image := (System.Drawing.Image(resources.GetObject('mnuEditFind.Image')));
+        self.mnuEditFind.Name := 'mnuEditFind';
+        self.mnuEditFind.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditFind.Text := '&Find...';
+        self.mnuEditFind.Click += mnuEditFind_Click;
         // 
-        // replaceToolStripMenuItem
+        // mnuEditReplace
         // 
-        self.replaceToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('replaceToolStripMenuItem.Image')));
-        self.replaceToolStripMenuItem.Name := 'replaceToolStripMenuItem';
-        self.replaceToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.replaceToolStripMenuItem.Text := 'Rep&lace...';
+        self.mnuEditReplace.Image := (System.Drawing.Image(resources.GetObject('mnuEditReplace.Image')));
+        self.mnuEditReplace.Name := 'mnuEditReplace';
+        self.mnuEditReplace.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditReplace.Text := 'Rep&lace...';
+        self.mnuEditReplace.Click += mnuEditReplace_Click;
         // 
-        // gotoToolStripMenuItem
+        // mnuEditGoto
         // 
-        self.gotoToolStripMenuItem.Name := 'gotoToolStripMenuItem';
-        self.gotoToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.gotoToolStripMenuItem.Text := '&Go To...';
+        self.mnuEditGoto.Name := 'mnuEditGoto';
+        self.mnuEditGoto.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditGoto.Text := '&Go To...';
+        self.mnuEditGoto.Click += mnuEditGoto_Click;
         // 
         // toolStripMenuItem6
         // 
         self.toolStripMenuItem6.Name := 'toolStripMenuItem6';
         self.toolStripMenuItem6.Size := new System.Drawing.Size(149, 6);
         // 
-        // refreshToolStripMenuItem
+        // mnuEditRefresh
         // 
-        self.refreshToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('refreshToolStripMenuItem.Image')));
-        self.refreshToolStripMenuItem.Name := 'refreshToolStripMenuItem';
-        self.refreshToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.refreshToolStripMenuItem.Text := 'R&efresh';
+        self.mnuEditRefresh.Image := (System.Drawing.Image(resources.GetObject('mnuEditRefresh.Image')));
+        self.mnuEditRefresh.Name := 'mnuEditRefresh';
+        self.mnuEditRefresh.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditRefresh.Text := 'R&efresh';
+        self.mnuEditRefresh.Click += mnuEditRefresh_Click;
         // 
         // toolStripMenuItem7
         // 
         self.toolStripMenuItem7.Name := 'toolStripMenuItem7';
         self.toolStripMenuItem7.Size := new System.Drawing.Size(149, 6);
         // 
-        // propertiesToolStripMenuItem
+        // mnuEditProperties
         // 
-        self.propertiesToolStripMenuItem.Name := 'propertiesToolStripMenuItem';
-        self.propertiesToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.propertiesToolStripMenuItem.Text := 'Pr&operties...';
+        self.mnuEditProperties.Name := 'mnuEditProperties';
+        self.mnuEditProperties.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditProperties.Text := 'Pr&operties...';
+        self.mnuEditProperties.Click += mnuEditProperties_Click;
         // 
-        // preferencesToolStripMenuItem
+        // mnuEditPreferences
         // 
-        self.preferencesToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('preferencesToolStripMenuItem.Image')));
-        self.preferencesToolStripMenuItem.Name := 'preferencesToolStripMenuItem';
-        self.preferencesToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.preferencesToolStripMenuItem.Text := 'Pr&eferences...';
+        self.mnuEditPreferences.Image := (System.Drawing.Image(resources.GetObject('mnuEditPreferences.Image')));
+        self.mnuEditPreferences.Name := 'mnuEditPreferences';
+        self.mnuEditPreferences.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditPreferences.Text := 'Pr&eferences...';
+        self.mnuEditPreferences.Click += mnuEditPreferences_Click;
         // 
         // mnuWindow
         // 
-        self.mnuWindow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[7](self.newWindowToolStripMenuItem, self.tileToolStripMenuItem, self.cascadeToolStripMenuItem, self.arrangeAllToolStripMenuItem, self.toolStripMenuItem8, self.hideToolStripMenuItem, self.showToolStripMenuItem));
+        self.mnuWindow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[7](self.mnuWindowNewWindow, self.mnuWindowTile, self.mnuWindowCascade, self.mnuWindowArrangeAll, self.toolStripMenuItem8, self.mnuWindowHide, self.mnuWindowShow));
         self.mnuWindow.Name := 'mnuWindow';
         self.mnuWindow.Size := new System.Drawing.Size(63, 20);
         self.mnuWindow.Text := '&Window';
         // 
-        // newWindowToolStripMenuItem
+        // mnuWindowNewWindow
         // 
-        self.newWindowToolStripMenuItem.Name := 'newWindowToolStripMenuItem';
-        self.newWindowToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.newWindowToolStripMenuItem.Text := '&New Window';
+        self.mnuWindowNewWindow.Name := 'mnuWindowNewWindow';
+        self.mnuWindowNewWindow.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowNewWindow.Text := '&New Window';
+        self.mnuWindowNewWindow.Click += mnuWindowNewWindow_Click;
         // 
-        // tileToolStripMenuItem
+        // mnuWindowTile
         // 
-        self.tileToolStripMenuItem.Name := 'tileToolStripMenuItem';
-        self.tileToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.tileToolStripMenuItem.Text := '&Tile';
+        self.mnuWindowTile.Name := 'mnuWindowTile';
+        self.mnuWindowTile.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowTile.Text := '&Tile';
+        self.mnuWindowTile.Click += mnuWindowTile_Click;
         // 
-        // cascadeToolStripMenuItem
+        // mnuWindowCascade
         // 
-        self.cascadeToolStripMenuItem.Name := 'cascadeToolStripMenuItem';
-        self.cascadeToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.cascadeToolStripMenuItem.Text := '&Cascade';
+        self.mnuWindowCascade.Name := 'mnuWindowCascade';
+        self.mnuWindowCascade.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowCascade.Text := '&Cascade';
+        self.mnuWindowCascade.Click += mnuWindowCascade_Click;
         // 
-        // arrangeAllToolStripMenuItem
+        // mnuWindowArrangeAll
         // 
-        self.arrangeAllToolStripMenuItem.Name := 'arrangeAllToolStripMenuItem';
-        self.arrangeAllToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.arrangeAllToolStripMenuItem.Text := '&Arrange All';
+        self.mnuWindowArrangeAll.Name := 'mnuWindowArrangeAll';
+        self.mnuWindowArrangeAll.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowArrangeAll.Text := '&Arrange All';
+        self.mnuWindowArrangeAll.Click += mnuWindowArrangeAll_Click;
         // 
         // toolStripMenuItem8
         // 
         self.toolStripMenuItem8.Name := 'toolStripMenuItem8';
         self.toolStripMenuItem8.Size := new System.Drawing.Size(149, 6);
         // 
-        // hideToolStripMenuItem
+        // mnuWindowHide
         // 
-        self.hideToolStripMenuItem.Name := 'hideToolStripMenuItem';
-        self.hideToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.hideToolStripMenuItem.Text := '&Hide';
+        self.mnuWindowHide.Name := 'mnuWindowHide';
+        self.mnuWindowHide.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowHide.Text := '&Hide';
+        self.mnuWindowHide.Click += mnuWindowHide_Click;
         // 
-        // showToolStripMenuItem
+        // mnuWindowShow
         // 
-        self.showToolStripMenuItem.Name := 'showToolStripMenuItem';
-        self.showToolStripMenuItem.Size := new System.Drawing.Size(152, 22);
-        self.showToolStripMenuItem.Text := '&Show';
+        self.mnuWindowShow.Name := 'mnuWindowShow';
+        self.mnuWindowShow.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowShow.Text := '&Show';
+        self.mnuWindowShow.Click += mnuWindowShow_Click;
         // 
         // mnuHelp
         // 
-        self.mnuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[8](self.helpContentsToolStripMenuItem, self.helpIndexToolStripMenuItem, self.helpOnHelpToolStripMenuItem, self.toolStripMenuItem10, self.licenceInformationToolStripMenuItem, self.checkForUpdatesToolStripMenuItem, self.toolStripMenuItem9, self.aboutToolStripMenuItem));
+        self.mnuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[8](self.mnuHelpHelpContents, self.mnuHelpHelpIndex, self.mnuHelpHelpOnHelp, self.toolStripMenuItem10, self.mnuHelpLicenceInformation, self.mnuHelpCheckForUpdates, self.toolStripMenuItem9, self.mnuHelpAbout));
         self.mnuHelp.Name := 'mnuHelp';
         self.mnuHelp.Size := new System.Drawing.Size(44, 20);
         self.mnuHelp.Text := '&Help';
         // 
-        // helpContentsToolStripMenuItem
+        // mnuHelpHelpContents
         // 
-        self.helpContentsToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('helpContentsToolStripMenuItem.Image')));
-        self.helpContentsToolStripMenuItem.Name := 'helpContentsToolStripMenuItem';
-        self.helpContentsToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
-        self.helpContentsToolStripMenuItem.Text := 'Help &Contents';
+        self.mnuHelpHelpContents.Image := (System.Drawing.Image(resources.GetObject('mnuHelpHelpContents.Image')));
+        self.mnuHelpHelpContents.Name := 'mnuHelpHelpContents';
+        self.mnuHelpHelpContents.Size := new System.Drawing.Size(180, 22);
+        self.mnuHelpHelpContents.Text := 'Help &Contents';
+        self.mnuHelpHelpContents.Click += mnuHelpHelpContents_Click;
         // 
-        // helpIndexToolStripMenuItem
+        // mnuHelpHelpIndex
         // 
-        self.helpIndexToolStripMenuItem.Name := 'helpIndexToolStripMenuItem';
-        self.helpIndexToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
-        self.helpIndexToolStripMenuItem.Text := 'Help &Index';
+        self.mnuHelpHelpIndex.Name := 'mnuHelpHelpIndex';
+        self.mnuHelpHelpIndex.Size := new System.Drawing.Size(180, 22);
+        self.mnuHelpHelpIndex.Text := 'Help &Index';
+        self.mnuHelpHelpIndex.Click += mnuHelpHelpIndex_Click;
         // 
-        // helpOnHelpToolStripMenuItem
+        // mnuHelpHelpOnHelp
         // 
-        self.helpOnHelpToolStripMenuItem.Name := 'helpOnHelpToolStripMenuItem';
-        self.helpOnHelpToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
-        self.helpOnHelpToolStripMenuItem.Text := 'Help &On Help';
+        self.mnuHelpHelpOnHelp.Name := 'mnuHelpHelpOnHelp';
+        self.mnuHelpHelpOnHelp.Size := new System.Drawing.Size(180, 22);
+        self.mnuHelpHelpOnHelp.Text := 'Help &On Help';
+        self.mnuHelpHelpOnHelp.Click += mnuHelpHelpOnHelp_Click;
         // 
         // toolStripMenuItem10
         // 
         self.toolStripMenuItem10.Name := 'toolStripMenuItem10';
         self.toolStripMenuItem10.Size := new System.Drawing.Size(177, 6);
         // 
-        // licenceInformationToolStripMenuItem
+        // mnuHelpLicenceInformation
         // 
-        self.licenceInformationToolStripMenuItem.Name := 'licenceInformationToolStripMenuItem';
-        self.licenceInformationToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
-        self.licenceInformationToolStripMenuItem.Text := '&Licence Information';
+        self.mnuHelpLicenceInformation.Name := 'mnuHelpLicenceInformation';
+        self.mnuHelpLicenceInformation.Size := new System.Drawing.Size(180, 22);
+        self.mnuHelpLicenceInformation.Text := '&Licence Information';
+        self.mnuHelpLicenceInformation.Click += mnuHelpLicenceInformation_Click;
         // 
-        // checkForUpdatesToolStripMenuItem
+        // mnuHelpCheckForUpdates
         // 
-        self.checkForUpdatesToolStripMenuItem.Name := 'checkForUpdatesToolStripMenuItem';
-        self.checkForUpdatesToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
-        self.checkForUpdatesToolStripMenuItem.Text := '&Check for Updates';
+        self.mnuHelpCheckForUpdates.Name := 'mnuHelpCheckForUpdates';
+        self.mnuHelpCheckForUpdates.Size := new System.Drawing.Size(180, 22);
+        self.mnuHelpCheckForUpdates.Text := '&Check for Updates';
+        self.mnuHelpCheckForUpdates.Click += mnuHelpCheckForUpdates_Click;
         // 
         // toolStripMenuItem9
         // 
         self.toolStripMenuItem9.Name := 'toolStripMenuItem9';
         self.toolStripMenuItem9.Size := new System.Drawing.Size(177, 6);
         // 
-        // aboutToolStripMenuItem
+        // mnuHelpAbout
         // 
-        self.aboutToolStripMenuItem.Image := (System.Drawing.Image(resources.GetObject('aboutToolStripMenuItem.Image')));
-        self.aboutToolStripMenuItem.Name := 'aboutToolStripMenuItem';
-        self.aboutToolStripMenuItem.Size := new System.Drawing.Size(180, 22);
-        self.aboutToolStripMenuItem.Text := '&About...';
+        self.mnuHelpAbout.Image := (System.Drawing.Image(resources.GetObject('mnuHelpAbout.Image')));
+        self.mnuHelpAbout.Name := 'mnuHelpAbout';
+        self.mnuHelpAbout.Size := new System.Drawing.Size(180, 22);
+        self.mnuHelpAbout.Text := '&About...';
+        self.mnuHelpAbout.Click += mnuHelpAbout_Click;
         // 
         // toolStrip
         // 
-        self.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[16](self.toolStripButton1, self.toolStripButton2, self.toolStripButton3, self.toolStripButton4, self.toolStripSeparator1, self.toolStripButton5, self.toolStripButton6, self.toolStripButton7, self.toolStripButton8, self.toolStripButton9, self.toolStripButton10, self.toolStripButton11, self.toolStripButton12, self.toolStripButton13, self.toolStripSeparator2, self.toolStripButton14));
+        self.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[16](self.btnFileNew, self.btnFileOpen, self.btnFileSave, self.btnFilePrint, self.toolStripSeparator1, self.btnEditUndo, self.btnEditRedo, self.btnEditCut, self.btnEditCopy, self.btnEditPaste, self.btnEditFind, self.btnEditReplace, self.btnEditRefresh, self.btnEditPreferences, self.toolStripSeparator2, self.btnHelpContents));
         self.toolStrip.Location := new System.Drawing.Point(0, 24);
         self.toolStrip.Name := 'toolStrip';
         self.toolStrip.Size := new System.Drawing.Size(624, 25);
         self.toolStrip.TabIndex := 1;
         self.toolStrip.Text := 'toolStrip1';
         // 
-        // toolStripButton1
+        // btnFileNew
         // 
-        self.toolStripButton1.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton1.Image := (System.Drawing.Image(resources.GetObject('toolStripButton1.Image')));
-        self.toolStripButton1.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton1.Name := 'toolStripButton1';
-        self.toolStripButton1.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton1.Text := 'New';
+        self.btnFileNew.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnFileNew.Image := (System.Drawing.Image(resources.GetObject('btnFileNew.Image')));
+        self.btnFileNew.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnFileNew.Name := 'btnFileNew';
+        self.btnFileNew.Size := new System.Drawing.Size(23, 22);
+        self.btnFileNew.Text := 'New';
+        self.btnFileNew.Click += btnFileNew_Click;
         // 
-        // toolStripButton2
+        // btnFileOpen
         // 
-        self.toolStripButton2.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton2.Image := (System.Drawing.Image(resources.GetObject('toolStripButton2.Image')));
-        self.toolStripButton2.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton2.Name := 'toolStripButton2';
-        self.toolStripButton2.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton2.Text := 'Open';
+        self.btnFileOpen.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnFileOpen.Image := (System.Drawing.Image(resources.GetObject('btnFileOpen.Image')));
+        self.btnFileOpen.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnFileOpen.Name := 'btnFileOpen';
+        self.btnFileOpen.Size := new System.Drawing.Size(23, 22);
+        self.btnFileOpen.Text := 'Open';
+        self.btnFileOpen.Click += btnFileOpen_Click;
         // 
-        // toolStripButton3
+        // btnFileSave
         // 
-        self.toolStripButton3.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton3.Image := (System.Drawing.Image(resources.GetObject('toolStripButton3.Image')));
-        self.toolStripButton3.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton3.Name := 'toolStripButton3';
-        self.toolStripButton3.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton3.Text := 'Save';
+        self.btnFileSave.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnFileSave.Image := (System.Drawing.Image(resources.GetObject('btnFileSave.Image')));
+        self.btnFileSave.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnFileSave.Name := 'btnFileSave';
+        self.btnFileSave.Size := new System.Drawing.Size(23, 22);
+        self.btnFileSave.Text := 'Save';
+        self.btnFileSave.Click += btnFileSave_Click;
         // 
-        // toolStripButton4
+        // btnFilePrint
         // 
-        self.toolStripButton4.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton4.Image := (System.Drawing.Image(resources.GetObject('toolStripButton4.Image')));
-        self.toolStripButton4.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton4.Name := 'toolStripButton4';
-        self.toolStripButton4.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton4.Text := 'Print';
+        self.btnFilePrint.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnFilePrint.Image := (System.Drawing.Image(resources.GetObject('btnFilePrint.Image')));
+        self.btnFilePrint.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnFilePrint.Name := 'btnFilePrint';
+        self.btnFilePrint.Size := new System.Drawing.Size(23, 22);
+        self.btnFilePrint.Text := 'Print';
+        self.btnFilePrint.Click += btnFilePrint_Click;
         // 
         // toolStripSeparator1
         // 
         self.toolStripSeparator1.Name := 'toolStripSeparator1';
         self.toolStripSeparator1.Size := new System.Drawing.Size(6, 25);
         // 
-        // toolStripButton5
+        // btnEditUndo
         // 
-        self.toolStripButton5.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton5.Image := (System.Drawing.Image(resources.GetObject('toolStripButton5.Image')));
-        self.toolStripButton5.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton5.Name := 'toolStripButton5';
-        self.toolStripButton5.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton5.Text := 'Undo';
+        self.btnEditUndo.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditUndo.Image := (System.Drawing.Image(resources.GetObject('btnEditUndo.Image')));
+        self.btnEditUndo.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditUndo.Name := 'btnEditUndo';
+        self.btnEditUndo.Size := new System.Drawing.Size(23, 22);
+        self.btnEditUndo.Text := 'Undo';
+        self.btnEditUndo.Click += btnEditUndo_Click;
         // 
-        // toolStripButton6
+        // btnEditRedo
         // 
-        self.toolStripButton6.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton6.Image := (System.Drawing.Image(resources.GetObject('toolStripButton6.Image')));
-        self.toolStripButton6.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton6.Name := 'toolStripButton6';
-        self.toolStripButton6.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton6.Text := 'Redo';
+        self.btnEditRedo.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditRedo.Image := (System.Drawing.Image(resources.GetObject('btnEditRedo.Image')));
+        self.btnEditRedo.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditRedo.Name := 'btnEditRedo';
+        self.btnEditRedo.Size := new System.Drawing.Size(23, 22);
+        self.btnEditRedo.Text := 'Redo';
+        self.btnEditRedo.Click += btnEditRedo_Click;
         // 
-        // toolStripButton7
+        // btnEditCut
         // 
-        self.toolStripButton7.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton7.Image := (System.Drawing.Image(resources.GetObject('toolStripButton7.Image')));
-        self.toolStripButton7.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton7.Name := 'toolStripButton7';
-        self.toolStripButton7.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton7.Text := 'Cut';
+        self.btnEditCut.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditCut.Image := (System.Drawing.Image(resources.GetObject('btnEditCut.Image')));
+        self.btnEditCut.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditCut.Name := 'btnEditCut';
+        self.btnEditCut.Size := new System.Drawing.Size(23, 22);
+        self.btnEditCut.Text := 'Cut';
+        self.btnEditCut.Click += btnEditCut_Click;
         // 
-        // toolStripButton8
+        // btnEditCopy
         // 
-        self.toolStripButton8.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton8.Image := (System.Drawing.Image(resources.GetObject('toolStripButton8.Image')));
-        self.toolStripButton8.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton8.Name := 'toolStripButton8';
-        self.toolStripButton8.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton8.Text := 'Copy';
+        self.btnEditCopy.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditCopy.Image := (System.Drawing.Image(resources.GetObject('btnEditCopy.Image')));
+        self.btnEditCopy.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditCopy.Name := 'btnEditCopy';
+        self.btnEditCopy.Size := new System.Drawing.Size(23, 22);
+        self.btnEditCopy.Text := 'Copy';
+        self.btnEditCopy.Click += btnEditCopy_Click;
         // 
-        // toolStripButton9
+        // btnEditPaste
         // 
-        self.toolStripButton9.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton9.Image := (System.Drawing.Image(resources.GetObject('toolStripButton9.Image')));
-        self.toolStripButton9.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton9.Name := 'toolStripButton9';
-        self.toolStripButton9.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton9.Text := 'Paste';
+        self.btnEditPaste.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditPaste.Image := (System.Drawing.Image(resources.GetObject('btnEditPaste.Image')));
+        self.btnEditPaste.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditPaste.Name := 'btnEditPaste';
+        self.btnEditPaste.Size := new System.Drawing.Size(23, 22);
+        self.btnEditPaste.Text := 'Paste';
+        self.btnEditPaste.Click += btnEditPaste_Click;
         // 
-        // toolStripButton10
+        // btnEditFind
         // 
-        self.toolStripButton10.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton10.Image := (System.Drawing.Image(resources.GetObject('toolStripButton10.Image')));
-        self.toolStripButton10.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton10.Name := 'toolStripButton10';
-        self.toolStripButton10.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton10.Text := 'Find';
+        self.btnEditFind.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditFind.Image := (System.Drawing.Image(resources.GetObject('btnEditFind.Image')));
+        self.btnEditFind.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditFind.Name := 'btnEditFind';
+        self.btnEditFind.Size := new System.Drawing.Size(23, 22);
+        self.btnEditFind.Text := 'Find';
+        self.btnEditFind.Click += btnEditFind_Click;
         // 
-        // toolStripButton11
+        // btnEditReplace
         // 
-        self.toolStripButton11.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton11.Image := (System.Drawing.Image(resources.GetObject('toolStripButton11.Image')));
-        self.toolStripButton11.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton11.Name := 'toolStripButton11';
-        self.toolStripButton11.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton11.Text := 'Replace';
+        self.btnEditReplace.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditReplace.Image := (System.Drawing.Image(resources.GetObject('btnEditReplace.Image')));
+        self.btnEditReplace.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditReplace.Name := 'btnEditReplace';
+        self.btnEditReplace.Size := new System.Drawing.Size(23, 22);
+        self.btnEditReplace.Text := 'Replace';
+        self.btnEditReplace.Click += btnEditReplace_Click;
         // 
-        // toolStripButton12
+        // btnEditRefresh
         // 
-        self.toolStripButton12.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton12.Image := (System.Drawing.Image(resources.GetObject('toolStripButton12.Image')));
-        self.toolStripButton12.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton12.Name := 'toolStripButton12';
-        self.toolStripButton12.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton12.Text := 'Refresh';
+        self.btnEditRefresh.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditRefresh.Image := (System.Drawing.Image(resources.GetObject('btnEditRefresh.Image')));
+        self.btnEditRefresh.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditRefresh.Name := 'btnEditRefresh';
+        self.btnEditRefresh.Size := new System.Drawing.Size(23, 22);
+        self.btnEditRefresh.Text := 'Refresh';
+        self.btnEditRefresh.Click += btnEditRefresh_Click;
         // 
-        // toolStripButton13
+        // btnEditPreferences
         // 
-        self.toolStripButton13.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton13.Image := (System.Drawing.Image(resources.GetObject('toolStripButton13.Image')));
-        self.toolStripButton13.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton13.Name := 'toolStripButton13';
-        self.toolStripButton13.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton13.Text := 'Preferences';
+        self.btnEditPreferences.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnEditPreferences.Image := (System.Drawing.Image(resources.GetObject('btnEditPreferences.Image')));
+        self.btnEditPreferences.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnEditPreferences.Name := 'btnEditPreferences';
+        self.btnEditPreferences.Size := new System.Drawing.Size(23, 22);
+        self.btnEditPreferences.Text := 'Preferences';
+        self.btnEditPreferences.Click += btnEditPreferences_Click;
         // 
         // toolStripSeparator2
         // 
         self.toolStripSeparator2.Name := 'toolStripSeparator2';
         self.toolStripSeparator2.Size := new System.Drawing.Size(6, 25);
         // 
-        // toolStripButton14
+        // btnHelpContents
         // 
-        self.toolStripButton14.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.toolStripButton14.Image := (System.Drawing.Image(resources.GetObject('toolStripButton14.Image')));
-        self.toolStripButton14.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.toolStripButton14.Name := 'toolStripButton14';
-        self.toolStripButton14.Size := new System.Drawing.Size(23, 22);
-        self.toolStripButton14.Text := 'Help';
+        self.btnHelpContents.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        self.btnHelpContents.Image := (System.Drawing.Image(resources.GetObject('btnHelpContents.Image')));
+        self.btnHelpContents.ImageTransparentColor := System.Drawing.Color.Magenta;
+        self.btnHelpContents.Name := 'btnHelpContents';
+        self.btnHelpContents.Size := new System.Drawing.Size(23, 22);
+        self.btnHelpContents.Text := 'Help';
+        self.btnHelpContents.Click += btnHelpContents_Click;
         // 
         // statusStrip
         // 
