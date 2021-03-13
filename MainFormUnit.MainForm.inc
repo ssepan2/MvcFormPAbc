@@ -71,6 +71,13 @@ procedure InitializeComponent;
         self.prgProgress := new System.Windows.Forms.ToolStripProgressBar();
         self.btnAction := new System.Windows.Forms.ToolStripDropDownButton();
         self.btnDirty := new System.Windows.Forms.ToolStripDropDownButton();
+        self.SomeStringLabel := new System.Windows.Forms.Label();
+        self.SomeIntegerLabel := new System.Windows.Forms.Label();
+        self.SomeDateLabel := new System.Windows.Forms.Label();
+        self.SomeBooleanCheckBox := new System.Windows.Forms.CheckBox();
+        self.SomeStringEdit := new System.Windows.Forms.TextBox();
+        self.SomeIntegerEdit := new System.Windows.Forms.TextBox();
+        self.SomeDateEdit := new System.Windows.Forms.DateTimePicker();
         self.menuStrip.SuspendLayout();
         self.toolStrip.SuspendLayout();
         self.statusStrip.SuspendLayout();
@@ -96,7 +103,7 @@ procedure InitializeComponent;
         // 
         self.mnuFileNew.Image := (System.Drawing.Image(resources.GetObject('mnuFileNew.Image')));
         self.mnuFileNew.Name := 'mnuFileNew';
-        self.mnuFileNew.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileNew.Size := new System.Drawing.Size(141, 22);
         self.mnuFileNew.Text := '&New';
         self.mnuFileNew.Click += mnuFileNew_Click;
         // 
@@ -104,7 +111,7 @@ procedure InitializeComponent;
         // 
         self.mnuFileOpen.Image := (System.Drawing.Image(resources.GetObject('mnuFileOpen.Image')));
         self.mnuFileOpen.Name := 'mnuFileOpen';
-        self.mnuFileOpen.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileOpen.Size := new System.Drawing.Size(141, 22);
         self.mnuFileOpen.Text := '&Open';
         self.mnuFileOpen.Click += mnuFileOpen_Click;
         // 
@@ -112,7 +119,7 @@ procedure InitializeComponent;
         // 
         self.mnuFileSave.Image := (System.Drawing.Image(resources.GetObject('mnuFileSave.Image')));
         self.mnuFileSave.Name := 'mnuFileSave';
-        self.mnuFileSave.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileSave.Size := new System.Drawing.Size(141, 22);
         self.mnuFileSave.Text := '&Save';
         self.mnuFileSave.Click += mnuFileSave_Click;
         // 
@@ -120,39 +127,39 @@ procedure InitializeComponent;
         // 
         self.mnuFileSaveAs.Image := (System.Drawing.Image(resources.GetObject('mnuFileSaveAs.Image')));
         self.mnuFileSaveAs.Name := 'mnuFileSaveAs';
-        self.mnuFileSaveAs.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileSaveAs.Size := new System.Drawing.Size(141, 22);
         self.mnuFileSaveAs.Text := 'Save &As...';
         self.mnuFileSaveAs.Click += mnuFileSaveAs_Click;
         // 
         // toolStripMenuItem1
         // 
         self.toolStripMenuItem1.Name := 'toolStripMenuItem1';
-        self.toolStripMenuItem1.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem1.Size := new System.Drawing.Size(138, 6);
         // 
         // mnuFilePrint
         // 
         self.mnuFilePrint.Image := (System.Drawing.Image(resources.GetObject('mnuFilePrint.Image')));
         self.mnuFilePrint.Name := 'mnuFilePrint';
-        self.mnuFilePrint.Size := new System.Drawing.Size(152, 22);
+        self.mnuFilePrint.Size := new System.Drawing.Size(141, 22);
         self.mnuFilePrint.Text := '&Print';
         self.mnuFilePrint.Click += mnuFilePrint_Click;
         // 
         // mnuFilePrintSetup
         // 
         self.mnuFilePrintSetup.Name := 'mnuFilePrintSetup';
-        self.mnuFilePrintSetup.Size := new System.Drawing.Size(152, 22);
+        self.mnuFilePrintSetup.Size := new System.Drawing.Size(141, 22);
         self.mnuFilePrintSetup.Text := 'P&rint Setup...';
         self.mnuFilePrintSetup.Click += mnuFilePrintSetup_Click;
         // 
         // toolStripMenuItem2
         // 
         self.toolStripMenuItem2.Name := 'toolStripMenuItem2';
-        self.toolStripMenuItem2.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem2.Size := new System.Drawing.Size(138, 6);
         // 
         // mnuFileExit
         // 
         self.mnuFileExit.Name := 'mnuFileExit';
-        self.mnuFileExit.Size := new System.Drawing.Size(152, 22);
+        self.mnuFileExit.Size := new System.Drawing.Size(141, 22);
         self.mnuFileExit.Text := 'E&xit';
         self.mnuFileExit.Click += mnuFileExit_Click;
         // 
@@ -167,7 +174,7 @@ procedure InitializeComponent;
         // 
         self.mnuEditUndo.Image := (System.Drawing.Image(resources.GetObject('mnuEditUndo.Image')));
         self.mnuEditUndo.Name := 'mnuEditUndo';
-        self.mnuEditUndo.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditUndo.Size := new System.Drawing.Size(151, 22);
         self.mnuEditUndo.Text := '&Undo';
         self.mnuEditUndo.Click += mnuEditUndo_Click;
         // 
@@ -175,19 +182,19 @@ procedure InitializeComponent;
         // 
         self.mnuEditRedo.Image := (System.Drawing.Image(resources.GetObject('mnuEditRedo.Image')));
         self.mnuEditRedo.Name := 'mnuEditRedo';
-        self.mnuEditRedo.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditRedo.Size := new System.Drawing.Size(151, 22);
         self.mnuEditRedo.Text := '&Redo';
         self.mnuEditRedo.Click += mnuEditRedo_Click;
         // 
         // toolStripMenuItem3
         // 
         self.toolStripMenuItem3.Name := 'toolStripMenuItem3';
-        self.toolStripMenuItem3.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem3.Size := new System.Drawing.Size(148, 6);
         // 
         // mnuEditSelectAll
         // 
         self.mnuEditSelectAll.Name := 'mnuEditSelectAll';
-        self.mnuEditSelectAll.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditSelectAll.Size := new System.Drawing.Size(151, 22);
         self.mnuEditSelectAll.Text := 'Select &All';
         self.mnuEditSelectAll.Click += mnuEditSelectAll_Click;
         // 
@@ -195,7 +202,7 @@ procedure InitializeComponent;
         // 
         self.mnuEditCut.Image := (System.Drawing.Image(resources.GetObject('mnuEditCut.Image')));
         self.mnuEditCut.Name := 'mnuEditCut';
-        self.mnuEditCut.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditCut.Size := new System.Drawing.Size(151, 22);
         self.mnuEditCut.Text := 'Cu&t';
         self.mnuEditCut.Click += mnuEditCut_Click;
         // 
@@ -203,7 +210,7 @@ procedure InitializeComponent;
         // 
         self.mnuEditCopy.Image := (System.Drawing.Image(resources.GetObject('mnuEditCopy.Image')));
         self.mnuEditCopy.Name := 'mnuEditCopy';
-        self.mnuEditCopy.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditCopy.Size := new System.Drawing.Size(151, 22);
         self.mnuEditCopy.Text := '&Copy';
         self.mnuEditCopy.Click += mnuEditCopy_Click;
         // 
@@ -211,14 +218,14 @@ procedure InitializeComponent;
         // 
         self.mnuEditPaste.Image := (System.Drawing.Image(resources.GetObject('mnuEditPaste.Image')));
         self.mnuEditPaste.Name := 'mnuEditPaste';
-        self.mnuEditPaste.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditPaste.Size := new System.Drawing.Size(151, 22);
         self.mnuEditPaste.Text := '&Paste';
         self.mnuEditPaste.Click += mnuEditPaste_Click;
         // 
         // mnuEditPasteSpecial
         // 
         self.mnuEditPasteSpecial.Name := 'mnuEditPasteSpecial';
-        self.mnuEditPasteSpecial.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditPasteSpecial.Size := new System.Drawing.Size(151, 22);
         self.mnuEditPasteSpecial.Text := 'Paste &Special...';
         self.mnuEditPasteSpecial.Click += mnuEditPasteSpecial_Click;
         // 
@@ -226,20 +233,20 @@ procedure InitializeComponent;
         // 
         self.mnuEditDelete.Image := (System.Drawing.Image(resources.GetObject('mnuEditDelete.Image')));
         self.mnuEditDelete.Name := 'mnuEditDelete';
-        self.mnuEditDelete.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditDelete.Size := new System.Drawing.Size(151, 22);
         self.mnuEditDelete.Text := '&Delete';
         self.mnuEditDelete.Click += mnuEditDelete_Click;
         // 
         // toolStripMenuItem5
         // 
         self.toolStripMenuItem5.Name := 'toolStripMenuItem5';
-        self.toolStripMenuItem5.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem5.Size := new System.Drawing.Size(148, 6);
         // 
         // mnuEditFind
         // 
         self.mnuEditFind.Image := (System.Drawing.Image(resources.GetObject('mnuEditFind.Image')));
         self.mnuEditFind.Name := 'mnuEditFind';
-        self.mnuEditFind.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditFind.Size := new System.Drawing.Size(151, 22);
         self.mnuEditFind.Text := '&Find...';
         self.mnuEditFind.Click += mnuEditFind_Click;
         // 
@@ -247,39 +254,39 @@ procedure InitializeComponent;
         // 
         self.mnuEditReplace.Image := (System.Drawing.Image(resources.GetObject('mnuEditReplace.Image')));
         self.mnuEditReplace.Name := 'mnuEditReplace';
-        self.mnuEditReplace.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditReplace.Size := new System.Drawing.Size(151, 22);
         self.mnuEditReplace.Text := 'Rep&lace...';
         self.mnuEditReplace.Click += mnuEditReplace_Click;
         // 
         // mnuEditGoto
         // 
         self.mnuEditGoto.Name := 'mnuEditGoto';
-        self.mnuEditGoto.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditGoto.Size := new System.Drawing.Size(151, 22);
         self.mnuEditGoto.Text := '&Go To...';
         self.mnuEditGoto.Click += mnuEditGoto_Click;
         // 
         // toolStripMenuItem6
         // 
         self.toolStripMenuItem6.Name := 'toolStripMenuItem6';
-        self.toolStripMenuItem6.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem6.Size := new System.Drawing.Size(148, 6);
         // 
         // mnuEditRefresh
         // 
         self.mnuEditRefresh.Image := (System.Drawing.Image(resources.GetObject('mnuEditRefresh.Image')));
         self.mnuEditRefresh.Name := 'mnuEditRefresh';
-        self.mnuEditRefresh.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditRefresh.Size := new System.Drawing.Size(151, 22);
         self.mnuEditRefresh.Text := 'R&efresh';
         self.mnuEditRefresh.Click += mnuEditRefresh_Click;
         // 
         // toolStripMenuItem7
         // 
         self.toolStripMenuItem7.Name := 'toolStripMenuItem7';
-        self.toolStripMenuItem7.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem7.Size := new System.Drawing.Size(148, 6);
         // 
         // mnuEditProperties
         // 
         self.mnuEditProperties.Name := 'mnuEditProperties';
-        self.mnuEditProperties.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditProperties.Size := new System.Drawing.Size(151, 22);
         self.mnuEditProperties.Text := 'Pr&operties...';
         self.mnuEditProperties.Click += mnuEditProperties_Click;
         // 
@@ -287,7 +294,7 @@ procedure InitializeComponent;
         // 
         self.mnuEditPreferences.Image := (System.Drawing.Image(resources.GetObject('mnuEditPreferences.Image')));
         self.mnuEditPreferences.Name := 'mnuEditPreferences';
-        self.mnuEditPreferences.Size := new System.Drawing.Size(152, 22);
+        self.mnuEditPreferences.Size := new System.Drawing.Size(151, 22);
         self.mnuEditPreferences.Text := 'Pr&eferences...';
         self.mnuEditPreferences.Click += mnuEditPreferences_Click;
         // 
@@ -301,47 +308,47 @@ procedure InitializeComponent;
         // mnuWindowNewWindow
         // 
         self.mnuWindowNewWindow.Name := 'mnuWindowNewWindow';
-        self.mnuWindowNewWindow.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowNewWindow.Size := new System.Drawing.Size(145, 22);
         self.mnuWindowNewWindow.Text := '&New Window';
         self.mnuWindowNewWindow.Click += mnuWindowNewWindow_Click;
         // 
         // mnuWindowTile
         // 
         self.mnuWindowTile.Name := 'mnuWindowTile';
-        self.mnuWindowTile.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowTile.Size := new System.Drawing.Size(145, 22);
         self.mnuWindowTile.Text := '&Tile';
         self.mnuWindowTile.Click += mnuWindowTile_Click;
         // 
         // mnuWindowCascade
         // 
         self.mnuWindowCascade.Name := 'mnuWindowCascade';
-        self.mnuWindowCascade.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowCascade.Size := new System.Drawing.Size(145, 22);
         self.mnuWindowCascade.Text := '&Cascade';
         self.mnuWindowCascade.Click += mnuWindowCascade_Click;
         // 
         // mnuWindowArrangeAll
         // 
         self.mnuWindowArrangeAll.Name := 'mnuWindowArrangeAll';
-        self.mnuWindowArrangeAll.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowArrangeAll.Size := new System.Drawing.Size(145, 22);
         self.mnuWindowArrangeAll.Text := '&Arrange All';
         self.mnuWindowArrangeAll.Click += mnuWindowArrangeAll_Click;
         // 
         // toolStripMenuItem8
         // 
         self.toolStripMenuItem8.Name := 'toolStripMenuItem8';
-        self.toolStripMenuItem8.Size := new System.Drawing.Size(149, 6);
+        self.toolStripMenuItem8.Size := new System.Drawing.Size(142, 6);
         // 
         // mnuWindowHide
         // 
         self.mnuWindowHide.Name := 'mnuWindowHide';
-        self.mnuWindowHide.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowHide.Size := new System.Drawing.Size(145, 22);
         self.mnuWindowHide.Text := '&Hide';
         self.mnuWindowHide.Click += mnuWindowHide_Click;
         // 
         // mnuWindowShow
         // 
         self.mnuWindowShow.Name := 'mnuWindowShow';
-        self.mnuWindowShow.Size := new System.Drawing.Size(152, 22);
+        self.mnuWindowShow.Size := new System.Drawing.Size(145, 22);
         self.mnuWindowShow.Text := '&Show';
         self.mnuWindowShow.Click += mnuWindowShow_Click;
         // 
@@ -578,20 +585,19 @@ procedure InitializeComponent;
         // 
         self.lblStatus.ForeColor := System.Drawing.Color.Green;
         self.lblStatus.Name := 'lblStatus';
-        self.lblStatus.Size := new System.Drawing.Size(39, 17);
-        self.lblStatus.Text := 'Status';
+        self.lblStatus.Size := new System.Drawing.Size(0, 17);
         // 
         // lblError
         // 
         self.lblError.ForeColor := System.Drawing.Color.Red;
         self.lblError.Name := 'lblError';
-        self.lblError.Size := new System.Drawing.Size(32, 17);
-        self.lblError.Text := 'Error';
+        self.lblError.Size := new System.Drawing.Size(0, 17);
         // 
         // prgProgress
         // 
         self.prgProgress.Name := 'prgProgress';
         self.prgProgress.Size := new System.Drawing.Size(100, 16);
+        self.prgProgress.Visible := false;
         // 
         // btnAction
         // 
@@ -601,6 +607,7 @@ procedure InitializeComponent;
         self.btnAction.Name := 'btnAction';
         self.btnAction.Size := new System.Drawing.Size(29, 20);
         self.btnAction.Text := 'toolStripDropDownButton1';
+        self.btnAction.Visible := false;
         // 
         // btnDirty
         // 
@@ -610,16 +617,88 @@ procedure InitializeComponent;
         self.btnDirty.Name := 'btnDirty';
         self.btnDirty.Size := new System.Drawing.Size(29, 20);
         self.btnDirty.Text := 'toolStripDropDownButton2';
+        self.btnDirty.Visible := false;
+        // 
+        // SomeStringLabel
+        // 
+        self.SomeStringLabel.Location := new System.Drawing.Point(30, 52);
+        self.SomeStringLabel.Name := 'SomeStringLabel';
+        self.SomeStringLabel.Size := new System.Drawing.Size(100, 23);
+        self.SomeStringLabel.TabIndex := 3;
+        self.SomeStringLabel.Text := 'Some String:';
+        self.SomeStringLabel.TextAlign := System.Drawing.ContentAlignment.MiddleRight;
+        // 
+        // SomeIntegerLabel
+        // 
+        self.SomeIntegerLabel.Location := new System.Drawing.Point(30, 75);
+        self.SomeIntegerLabel.Name := 'SomeIntegerLabel';
+        self.SomeIntegerLabel.Size := new System.Drawing.Size(100, 23);
+        self.SomeIntegerLabel.TabIndex := 4;
+        self.SomeIntegerLabel.Text := 'Some Integer:';
+        self.SomeIntegerLabel.TextAlign := System.Drawing.ContentAlignment.MiddleRight;
+        // 
+        // SomeDateLabel
+        // 
+        self.SomeDateLabel.Location := new System.Drawing.Point(30, 134);
+        self.SomeDateLabel.Name := 'SomeDateLabel';
+        self.SomeDateLabel.Size := new System.Drawing.Size(100, 23);
+        self.SomeDateLabel.TabIndex := 5;
+        self.SomeDateLabel.Text := 'Some Date:';
+        self.SomeDateLabel.TextAlign := System.Drawing.ContentAlignment.MiddleRight;
+        // 
+        // SomeBooleanCheckBox
+        // 
+        self.SomeBooleanCheckBox.CheckAlign := System.Drawing.ContentAlignment.MiddleRight;
+        self.SomeBooleanCheckBox.Location := new System.Drawing.Point(52, 104);
+        self.SomeBooleanCheckBox.Name := 'SomeBooleanCheckBox';
+        self.SomeBooleanCheckBox.Size := new System.Drawing.Size(98, 24);
+        self.SomeBooleanCheckBox.TabIndex := 6;
+        self.SomeBooleanCheckBox.Text := 'Some Boolean:';
+        self.SomeBooleanCheckBox.UseVisualStyleBackColor := true;
+        self.SomeBooleanCheckBox.CheckedChanged += SomeBooleanCheckBox_CheckedChanged;
+        // 
+        // SomeStringEdit
+        // 
+        self.SomeStringEdit.Location := new System.Drawing.Point(136, 52);
+        self.SomeStringEdit.Name := 'SomeStringEdit';
+        self.SomeStringEdit.Size := new System.Drawing.Size(100, 20);
+        self.SomeStringEdit.TabIndex := 7;
+        self.SomeStringEdit.TextChanged += SomeStringEdit_TextChanged;
+        // 
+        // SomeIntegerEdit
+        // 
+        self.SomeIntegerEdit.Location := new System.Drawing.Point(136, 78);
+        self.SomeIntegerEdit.Name := 'SomeIntegerEdit';
+        self.SomeIntegerEdit.Size := new System.Drawing.Size(100, 20);
+        self.SomeIntegerEdit.TabIndex := 8;
+        self.SomeIntegerEdit.TextChanged += SomeIntegerEdit_TextChanged;
+        // 
+        // SomeDateEdit
+        // 
+        self.SomeDateEdit.Location := new System.Drawing.Point(136, 134);
+        self.SomeDateEdit.Name := 'SomeDateEdit';
+        self.SomeDateEdit.Size := new System.Drawing.Size(200, 20);
+        self.SomeDateEdit.TabIndex := 9;
+        self.SomeDateEdit.ValueChanged += SomeDateEdit_ValueChanged;
         // 
         // MainForm
         // 
         self.ClientSize := new System.Drawing.Size(624, 442);
+        self.Controls.Add(self.SomeDateEdit);
+        self.Controls.Add(self.SomeIntegerEdit);
+        self.Controls.Add(self.SomeStringEdit);
+        self.Controls.Add(self.SomeBooleanCheckBox);
+        self.Controls.Add(self.SomeDateLabel);
+        self.Controls.Add(self.SomeIntegerLabel);
+        self.Controls.Add(self.SomeStringLabel);
         self.Controls.Add(self.statusStrip);
         self.Controls.Add(self.toolStrip);
         self.Controls.Add(self.menuStrip);
         self.MainMenuStrip := self.menuStrip;
         self.Name := 'MainForm';
         self.Text := '(new) - Pascal Generic GUI w/ PascalABC';
+        self.FormClosing += MainForm_FormClosing;
+        self.Load += MainForm_Load;
         self.menuStrip.ResumeLayout(false);
         self.menuStrip.PerformLayout();
         self.toolStrip.ResumeLayout(false);

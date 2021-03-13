@@ -3,6 +3,10 @@
   <Items>
     <Item Type="SourceFile" Name="MvcFormPAbc.pas" Path="MvcFormPAbc.pas" />
     <Item Type="SourceFile" Name="MainFormUnit.pas" Path="MainFormUnit.pas" />
+    <Item Type="SourceFile" Name="ssepan_laz_application.pas" Path="ssepan_laz_application.pas" />
+    <Item Type="SourceFile" Name="ssepan_laz_utility.pas" Path="ssepan_laz_utility.pas" />
+    <Item Type="SourceFile" Name="modelbase.pas" Path="modelbase.pas" />
+    <Item Type="SourceFile" Name="somemodel.pas" Path="somemodel.pas" />
     <Item Type="Reference" AssemblyName="System" FullAssemblyName="System.dll" />
     <Item Type="Reference" AssemblyName="System.Windows.Forms" FullAssemblyName="System.Windows.Forms.dll" />
     <Item Type="Reference" AssemblyName="System.Drawing" FullAssemblyName="System.Drawing.dll" />
@@ -11,5 +15,6 @@
     <Item Type="Reference" AssemblyName="System.Data.DataSetExtensions" FullAssemblyName="System.Data.DataSetExtensions.dll" />
     <Item Type="Reference" AssemblyName="System.Xml" FullAssemblyName="System.Xml.dll" />
     <Item Type="Reference" AssemblyName="System.Xml.Linq" FullAssemblyName="System.Xml.Linq.dll" />
+    <Item Type="Reference" AssemblyName="Microsoft.VisualBasic" FullAssemblyName="Microsoft.VisualBasic.dll" />
   </Items>
 </Project>
