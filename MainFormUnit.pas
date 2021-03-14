@@ -146,11 +146,11 @@ type
     begin
       InitializeComponent;
     end;
-  end;
+  end;//type
+  
 const
     APP_TITLE_FORMAT : String = '''{0}'' - Pascal Generic GUI w/ PascalABC';
 var
-  //MainForm: TMainForm;
   objModel : TSomeModel;
   bStopControlEvents : Boolean;
 
@@ -195,51 +195,52 @@ begin
             'Key':
             begin
                 //update when Key directly edited or when new/open/save/saveas
-                //formatResult:=String.Format(APP_TITLE_FORMAT,[objModel.Key]);
-               // MainForm.Caption := formatResult;
+                formatResult:=String.Format(APP_TITLE_FORMAT,objModel.Key);
+                MainForm.ActiveForm.Text := formatResult + DateTime.Now.ToString();
 
-                //formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',[propertyName,objModel.Key]);
-                //WriteLn(formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.Key);
+                WriteLn(formatResult);
             end;
             'SomeString':
             begin
-               // MainForm.SomeStringEdit.Text := objModel.SomeString;
+                //NOTE:seriously!?
+                //SomeStringEdit.Text := objModel.SomeString;//MainFormUnit.pas(207) : Undefined name reference 'SomeStringEdit'
+               TextBox(MainForm.ActiveForm.Controls.Find('SomeStringEdit', False)[0]).Text := objModel.SomeString;
 
-                //formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',[propertyName,objModel.SomeString]);
-                //WriteLn(formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeString);
+                WriteLn(formatResult);
             end;
             'SomeInteger':
             begin
-               // MainForm.SomeIntegerEdit.Text := IntToStr(objModel.SomeInteger);
+                //MainForm.ActiveForm.SomeIntegerEdit.Text := IntToStr(objModel.SomeInteger);
 
-                //formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',[propertyName,objModel.SomeInteger.ToString()]);
-                //WriteLn(formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeInteger.ToString());
+                WriteLn(formatResult);
             end;
             'SomeBoolean':
             begin
-               // MainForm.SomeBooleanCheckBox.Checked := objModel.SomeBoolean;
+                //MainForm.ActiveForm.SomeBooleanCheckBox.Checked := objModel.SomeBoolean;
 
-                //formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',[propertyName,objModel.SomeBoolean.ToString()]);
-                //WriteLn(formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeBoolean.ToString());
+                WriteLn(formatResult);
             end;
             'SomeDateTime':
             begin
-               // formatResult := FormatDateTime('c',objModel.SomeDateTime);
-               // MainForm.SomeDateDateEdit.Text := formatResult;
+               // MainForm.ActiveForm.SomeDateDateEdit.Text := objModel.SomeDateTime;
 
-                //formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',[propertyName,formatResult]);
-                //WriteLn(formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,formatResult);
+                WriteLn(formatResult);
             end;
             'Dirty':
             begin
-               // MainForm.imgDirtyIcon.Visible := objModel.Dirty; //use wrapper sub in viewmodel
+                //MainForm.ActiveForm.imgDirtyIcon.Visible := objModel.Dirty; //use wrapper sub in viewmodel
 
-                //formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',[propertyName,objModel.Dirty.ToString()]);
-                //WriteLn(formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.Dirty.ToString());
+                WriteLn(formatResult);
             end;
             Else
             begin
-                formatResult:=String.Format('unhandled event: ''{0}''',[propertyName]);
+                formatResult:=String.Format('unhandled event: ''{0}''',propertyName);
                 WriteLn(formatResult);
             end;
         End; //case
@@ -2197,5 +2198,12 @@ begin
     end;
 end;
 
+//begin
+//  System.Windows.Forms.Application.EnableVisualStyles();
+//  System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+////  frmMain := new MainForm();
+////  System.Windows.Forms.Application.Run(frmMain)
+//  System.Windows.Forms.Application.Run(new MainForm)
+//end;
 
 end.
