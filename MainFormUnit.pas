@@ -169,6 +169,12 @@ type
     procedure ActionEditGoToOnExecute(sender: Object; e: EventArgs);
     procedure ActionEditRefreshOnExecute(sender: Object; e: EventArgs);
     procedure ActionEditPreferencesOnExecute(sender: Object; e: EventArgs);
+    procedure ActionWindowNewWindowOnExecute(sender: Object; e: EventArgs);
+    procedure ActionWindowTileOnExecute(sender: Object; e: EventArgs);
+    procedure ActionWindowCascadeOnExecute(sender: Object; e: EventArgs);
+    procedure ActionWindowArrangeAllExecute(sender: Object; e: EventArgs);
+    procedure ActionWindowHideExecute(sender: Object; e: EventArgs);
+    procedure ActionWindowShowExecute(sender: Object; e: EventArgs);
   public
     constructor;
     begin
@@ -1389,270 +1395,271 @@ begin
 end;
 
 //{Window}
-//procedure MainForm.ActionWindowCascadeOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='WindowCascade...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'WindowCascade done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'WindowCascade cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowCascadeOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionWindowHideExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='WindowHide...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'WindowHide done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'WindowHide cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowHideExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionWindowNewWindowOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='WindowNewWindow...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'WindowNewWindow done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'WindowNewWindow cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowNewWindowOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionWindowShowExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//    try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='WindowShow...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'WindowShow done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'WindowShow cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowShowExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionWindowTileOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='WindowTile...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'WindowTile done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'WindowTile cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowTileOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionWindowArrangeAllExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='WindowArrangeAll...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'WindowArrangeAll done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'WindowArrangeAll cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowArrangeAllExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
+
+procedure MainForm.ActionWindowNewWindowOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='New Window...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuWindowNewWindow.Enabled := False;
+          //self.btnWindowNewWindow.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'New Window done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'New Window cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuWindowNewWindow.Enabled := True;
+          //self.btnWindowNewWindow.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowNewWindowOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionWindowTileOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Tile...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuWindowTile.Enabled := False;
+          //self.btnWindowTile.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Tile done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Tile cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuWindowTile.Enabled := True;
+          //self.btnWindowTile.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowTileOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionWindowCascadeOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Cascade...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuWindowCascade.Enabled := False;
+          //self.btnWindowCascade.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Cascade done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Cascade cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuWindowCascade.Enabled := True;
+          //self.btnWindowCascade.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowCascadeOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionWindowArrangeAllExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Arrange All...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuWindowArrangeAll.Enabled := False;
+          //self.btnWindowArrangeAll.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Arrange All done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Arrange All cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuWindowArrangeAll.Enabled := True;
+          //self.btnWindowArrangeAll.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowArrangeAllExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionWindowHideExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Hide...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuWindowHide.Enabled := False;
+          //self.btnWindowHide.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Hide done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Hide cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuWindowHide.Enabled := True;
+          //self.btnWindowHide.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowHideExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionWindowShowExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+    try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Show...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuWindowShow.Enabled := False;
+          //self.btnWindowShow.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Show done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Show cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuWindowShow.Enabled := True;
+          //self.btnWindowShow.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowShowExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
 //{Help}
 //procedure MainForm.ActionHelpHelpContentsOnExecute(sender: Object; e: EventArgs);
 //var
@@ -2056,32 +2063,32 @@ end;
 
 procedure MainForm.mnuWindowNewWindow_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='WindowNewWindow';
+  ActionWindowNewWindowOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuWindowTile_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='WindowTile';
+  ActionWindowTileOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuWindowCascade_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='WindowCascade';
+  ActionWindowCascadeOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuWindowArrangeAll_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='WindowArrangeAll';
+  ActionWindowArrangeAllExecute(sender, e);
 end;
 
 procedure MainForm.mnuWindowHide_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='WindowHide';
+  ActionWindowHideExecute(sender, e);
 end;
 
 procedure MainForm.mnuWindowShow_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='WindowShow';
+  ActionWindowShowExecute(sender, e);
 end;
 
 procedure MainForm.mnuHelpHelpContents_Click(sender: Object; e: EventArgs);
