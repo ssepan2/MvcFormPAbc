@@ -153,6 +153,22 @@ type
     procedure ActionFileOpenOnExecute(sender: Object; e: EventArgs);
     procedure ActionFileSaveOnExecute(sender: Object; e: EventArgs);
     procedure ActionFileSaveAsOnExecute(sender: Object; e: EventArgs);
+    procedure ActionFilePrintOnExecute(sender: Object; e: EventArgs);
+    procedure ActionFilePrintSetupOnExecute(sender: Object; e: EventArgs);
+    procedure ActionFileExitOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditUndoOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditRedoOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditSelectAllOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditCutOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditCopyOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditPasteExecute(sender: Object; e: EventArgs);
+    procedure ActionEditPasteSpecialOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditDeleteOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditFindOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditReplaceOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditGoToOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditRefreshOnExecute(sender: Object; e: EventArgs);
+    procedure ActionEditPreferencesOnExecute(sender: Object; e: EventArgs);
   public
     constructor;
     begin
@@ -659,675 +675,719 @@ begin
    end;
 end;
 
-//procedure MainForm.ActionFilePrintOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//         //clear status, error messages at beginning of every action
-//        sStatusMessage:='FilePrint...';
-//        sErrorMessage:='';
-//
-//        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFilePrint.Image);//
-//
-//        //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then //TODO:TPrintDialog
-//        begin
-//           sStatusMessage := 'FilePrint done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'FilePrint cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFilePrintOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionFilePrintSetupOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='FilePrintSetup...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then  //TODO:TPrinterSetupDialog
-//        begin
-//           sStatusMessage := 'FilePrintSetup done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'FilePrintSetup cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFilePrintSetupOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionFileExitOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage,sStatusMessageFromCheck, sErrorMessage:String;
-//   bCancel : Boolean;
-//begin
-//   try
-//     try
-//        sStatusMessageFromCheck := '';
-//        bCancel := CheckForSaveOrCancel(sStatusMessageFromCheck);
-//
-//        //clear status, error messages at beginning of every action
-//       sStatusMessage:='Exit...';
-//       sErrorMessage:='';
-//
-//       //use progress bar (marquee) with action icon (where available) in status bar
-//       StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//       //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If bCancel Then
-//        begin
-//            sStatusMessage := 'Exit cancelled.';
-//        end
-//        Else
-//        begin
-//            //EXIT
-//           Self.Close();
-//        End;
-//
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileExitOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
+procedure MainForm.ActionFilePrintOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+         //clear status, error messages at beginning of every action
+        sStatusMessage:='Print...';
+        sErrorMessage:='';
+
+        //use progress bar (marquee) with action icon (where available) in status bar
+        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFilePrint.Image);//
+
+        //perform sender disable/enable in all actions
+        self.mnuFilePrint.Enabled := False;
+        self.btnFilePrint.Enabled := False;
+
+        If Something() Then //TODO:TPrintDialog
+        begin
+           sStatusMessage := 'Print done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Print cancelled.' ;
+        End;
+     finally
+       //always do this
+        self.mnuFilePrint.Enabled := True;
+        self.btnFilePrint.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFilePrintOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionFilePrintSetupOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Print Setup...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuFilePrintSetup.Enabled := False;
+          //self.btnFilePrintSetup.Enabled := False;
+
+        If Something() Then  //TODO:TPrinterSetupDialog
+        begin
+           sStatusMessage := 'Print Setup done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Print Setup cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuFilePrintSetup.Enabled := True;
+          //self.btnFilePrintSetup.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFilePrintSetupOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionFileExitOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage,sStatusMessageFromCheck, sErrorMessage:String;
+   bCancel : Boolean;
+begin
+   try
+     try
+        sStatusMessageFromCheck := '';
+        bCancel := CheckForSaveOrCancel(sStatusMessageFromCheck);
+
+        //clear status, error messages at beginning of every action
+       sStatusMessage:='Exit...';
+       sErrorMessage:='';
+
+       //use progress bar (marquee) with action icon (where available) in status bar
+       StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+       //perform sender disable/enable in all actions
+          self.mnuFileExit.Enabled := False;
+          //self.btnFileExit.Enabled := False;
+
+        If bCancel Then
+        begin
+            sStatusMessage := 'Exit cancelled.';
+        end
+        Else
+        begin
+            //EXIT
+           Self.Close();
+        End;
+
+     finally
+       //always do this
+          self.mnuFileExit.Enabled := True;
+          //self.btnFileExit.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileExitOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
 //{Edit}
-//procedure MainForm.ActionEditUndoOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditUndo...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditUndo.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditUndo done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditUndo cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditUndoOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditRedoOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditRedo...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditRedo.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditRedo done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditRedo cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditRedoOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditSelectAllOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditSelectAll...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditSelectAll done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditSelectAll cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditSelectAllOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditCutOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//    try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditCut...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditCut.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditCut done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditCut cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditCutOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditCopyOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditCopy...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditCopy.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditCopy done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditCopy cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditCopyOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditPasteExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//    try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditPaste...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditPaste.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditPaste done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditPaste cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPasteExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditPasteSpecialOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditPasteSpecial...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditPasteSpecial done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditPasteSpecial cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPasteSpecialOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditFindOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//    try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditFind...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditFind.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then //TODO:TFindDialog
-//        begin
-//           sStatusMessage := 'EditFind done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditFind cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditFindOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditReplaceOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditReplace...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditReplace.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then    //TODO:TReplaceDialog
-//        begin
-//           sStatusMessage := 'EditReplace done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditReplace cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditReplaceOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditGoToOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//    try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditGoTo...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditGoTo done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditGoTo cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditGoToOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditRefreshOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//         //clear status, error messages at beginning of every action
-//        sStatusMessage:='EditRefresh...';
-//        sErrorMessage:='';
-//
-//        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditRefresh.Image);//
-//
-//        //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        //TODO:replace Something() with this?
-//        objModel.RefreshModel(False); //to update view
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditRefresh done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditRefresh cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditRefreshOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionEditPreferencesOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//    try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='EditPreferences...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditPreferences.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'EditPreferences done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'EditPreferences cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPreferencesOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
+procedure MainForm.ActionEditUndoOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Undo...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditUndo.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditUndo.Enabled := False;
+          self.btnEditUndo.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Undo done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Undo cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditUndo.Enabled := True;
+          self.btnEditUndo.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditUndoOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditRedoOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Redo...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditRedo.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditRedo.Enabled := False;
+          self.btnEditRedo.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Redo done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Redo cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditRedo.Enabled := True;
+          self.btnEditRedo.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditRedoOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditSelectAllOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Select All...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditSelectAll.Enabled := False;
+          //self.btnEditSelectAll.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Select All done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Select All cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditSelectAll.Enabled := True;
+          //self.btnEditSelectAll.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditSelectAllOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditCutOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+    try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Cut...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditCut.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditCut.Enabled := False;
+          self.btnEditCut.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Cut done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Cut cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditCut.Enabled := True;
+          self.btnEditCut.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditCutOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditCopyOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Copy...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditCopy.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditCopy.Enabled := False;
+          self.btnEditCopy.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Copy done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Copy cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditCopy.Enabled := True;
+          self.btnEditCopy.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditCopyOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditPasteExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+    try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Paste...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditPaste.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditPaste.Enabled := False;
+          self.btnEditPaste.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Paste done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Paste cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditPaste.Enabled := True;
+          self.btnEditPaste.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPasteExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditPasteSpecialOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Paste Special...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditPasteSpecial.Enabled := False;
+          //self.btnEditPasteSpecial.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Paste Special done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Paste Special cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditPasteSpecial.Enabled := True;
+          //self.btnEditPasteSpecial.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPasteSpecialOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditDeleteOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Delete...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditDelete.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditDelete.Enabled := False;
+          //self.btnEditDelete.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Delete done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Delete cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditDelete.Enabled := True;
+          //self.btnEditDelete.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditDeleteOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditFindOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+    try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Find...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditFind.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditFind.Enabled := False;
+          self.btnEditFind.Enabled := False;
+
+        If Something() Then //TODO:TFindDialog
+        begin
+           sStatusMessage := 'Find done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Find cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditFind.Enabled := True;
+          self.btnEditFind.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditFindOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditReplaceOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Replace...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditReplace.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditReplace.Enabled := False;
+          self.btnEditReplace.Enabled := False;
+
+        If Something() Then    //TODO:TReplaceDialog
+        begin
+           sStatusMessage := 'Replace done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Replace cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditReplace.Enabled := True;
+          self.btnEditReplace.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditReplaceOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditGoToOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+    try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='GoTo...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditGoTo.Enabled := False;
+          //self.btnEditGoTo.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'GoTo done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'GoTo cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditGoTo.Enabled := True;
+          //self.btnEditGoTo.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditGoToOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditRefreshOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+         //clear status, error messages at beginning of every action
+        sStatusMessage:='Refresh...';
+        sErrorMessage:='';
+
+        //use progress bar (marquee) with action icon (where available) in status bar
+        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditRefresh.Image);//
+
+        //perform sender disable/enable in all actions
+          self.mnuEditRefresh.Enabled := False;
+          self.btnEditRefresh.Enabled := False;
+
+        //TODO:replace Something() with this?
+        objModel.RefreshModel(False); //to update view
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Refresh done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Refresh cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditRefresh.Enabled := True;
+          self.btnEditRefresh.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditRefreshOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionEditPreferencesOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+    try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Preferences...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditPreferences.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuEditPreferences.Enabled := False;
+          self.btnEditPreferences.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Preferences done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Preferences cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuEditPreferences.Enabled := True;
+          self.btnEditPreferences.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPreferencesOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
 //{Window}
 //procedure MainForm.ActionWindowCascadeOnExecute(sender: Object; e: EventArgs);
 //var
@@ -1911,77 +1971,77 @@ end;
 
 procedure MainForm.mnuFilePrint_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FilePrint';
+  ActionFilePrintOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuFilePrintSetup_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FilePrintSetup';
+  ActionFilePrintSetupOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuFileExit_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FileExit';
+  ActionFileExitOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditUndo_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditUndo';
+  ActionEditUndoOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditRedo_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditRedo';
+  ActionEditRedoOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditSelectAll_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditSelectAll';
+  ActionEditSelectAllOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditCut_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditCut';
+  ActionEditCutOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditCopy_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditCopy';
+  ActionEditCopyOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditPaste_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditPaste';
+  ActionEditPasteExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditPasteSpecial_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditPasteSpecial';
+  ActionEditPasteSpecialOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditDelete_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditDelete';
+  ActionEditDeleteOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditFind_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditFind';
+  ActionEditFindOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditReplace_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditReplace';
+  ActionEditReplaceOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditGoto_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditGoto';
+  ActionEditGoToOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditRefresh_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditRefresh';
+  ActionEditRefreshOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuEditProperties_Click(sender: Object; e: EventArgs);
@@ -1991,7 +2051,7 @@ end;
 
 procedure MainForm.mnuEditPreferences_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='EditPreferences';
+  ActionEditPreferencesOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuWindowNewWindow_Click(sender: Object; e: EventArgs);
