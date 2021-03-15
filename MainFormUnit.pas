@@ -141,6 +141,15 @@ type
     mnuHelp: ToolStripMenuItem;
     {$include MainFormUnit.MainForm.inc}
   {$endregion FormDesigner}
+    //from here down we should be able to edit directly
+    procedure delayFor(dt: double);
+    function Something():Boolean;    
+    procedure objModel_PropertyChanged(propertyName : String);
+    function FileNew() : Boolean;
+    function FileOpen() : Boolean;  
+    function FileSave(bSaveAs : Boolean; var sStatusMessage:String) : Boolean;  
+    function CheckForSaveOrCancel(var sStatusMessage:String) : Boolean;
+    
   public
     constructor;
     begin
@@ -159,7 +168,7 @@ implementation
 
 
 {Utility}
-procedure delayFor(dt: double);
+procedure MainForm.delayFor(dt: double);
 var
   tc : double;
 begin
@@ -169,7 +178,7 @@ begin
   until (Environment.TickCount{GetTickCount64} > tc + dt) {or (Application.Terminated)};
 end;
 
-function Something():Boolean;
+function MainForm.Something():Boolean;
 begin
     Application.DoEvents{ProcessMessages};
     delayFor(3000);
@@ -183,7 +192,7 @@ end;
  Handler for PropertyChanged on the model field 'Dirty' and others.
 </summary>
 }
-procedure objModel_PropertyChanged(propertyName : String);
+procedure MainForm.objModel_PropertyChanged(propertyName : String);
 var
      sErrorMessage, formatResult:String;
 begin
@@ -203,37 +212,35 @@ begin
             end;
             'SomeString':
             begin
-                //NOTE:seriously!?
-                //SomeStringEdit.Text := objModel.SomeString;//MainFormUnit.pas(207) : Undefined name reference 'SomeStringEdit'
-               TextBox(MainForm.ActiveForm.Controls.Find('SomeStringEdit', False)[0]).Text := objModel.SomeString;
+                self.SomeStringEdit.Text := objModel.SomeString;
 
                 formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeString);
                 WriteLn(formatResult);
             end;
             'SomeInteger':
             begin
-                //MainForm.ActiveForm.SomeIntegerEdit.Text := IntToStr(objModel.SomeInteger);
+                self.SomeIntegerEdit.Text := IntToStr(objModel.SomeInteger);
 
                 formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeInteger.ToString());
                 WriteLn(formatResult);
             end;
             'SomeBoolean':
             begin
-                //MainForm.ActiveForm.SomeBooleanCheckBox.Checked := objModel.SomeBoolean;
+                self.SomeBooleanCheckBox.Checked := objModel.SomeBoolean;
 
                 formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeBoolean.ToString());
                 WriteLn(formatResult);
             end;
             'SomeDateTime':
             begin
-               // MainForm.ActiveForm.SomeDateDateEdit.Text := objModel.SomeDateTime;
+                self.SomeDateEdit.Value := objModel.SomeDateTime;
 
                 formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,formatResult);
                 WriteLn(formatResult);
             end;
             'Dirty':
             begin
-                //MainForm.ActiveForm.imgDirtyIcon.Visible := objModel.Dirty; //use wrapper sub in viewmodel
+                //ToolStripDropDownButton(self.statusStrip.Items.Find('imgDirtyIcon', False)).Visible := objModel.Dirty; //use wrapper sub in viewmodel
 
                 formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.Dirty.ToString());
                 WriteLn(formatResult);
@@ -259,7 +266,7 @@ End;
 {%EndRegion}
 
 
-function FileNew() : Boolean;
+function MainForm.FileNew() : Boolean;
 var
    sErrorMessage:String;
    proc:  TProcArgString;
@@ -293,7 +300,7 @@ begin
     end;
 end;
 
-function FileOpen() : Boolean;
+function MainForm.FileOpen() : Boolean;
 var
    sErrorMessage,filePath:String;
 begin
@@ -327,7 +334,7 @@ end;
 // <summary>
 // Write model to settings
 // </summary>
-function FileSave(bSaveAs : Boolean; var sStatusMessage:String) : Boolean;
+function MainForm.FileSave(bSaveAs : Boolean; var sStatusMessage:String) : Boolean;
 var
    sErrorMessage,sResponse:String;
    bCancel : Boolean;
@@ -378,7 +385,7 @@ begin
     end;
 end;
 
-function CheckForSaveOrCancel(var sStatusMessage:String) : Boolean;
+function MainForm.CheckForSaveOrCancel(var sStatusMessage:String) : Boolean;
 var
    sErrorMessage, formatResult:String;
    cancel : Boolean;

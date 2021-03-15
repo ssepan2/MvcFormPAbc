@@ -39,7 +39,7 @@ Function FormatErrorForLog(sMessage , sContext , sHelp : String) : String;
 begin
   try
     try
-      sResult:=String.Format('Error: %s\r\nContext: %s\r\nHelp:%s.',[sMessage,sContext,sHelp]);
+      sResult:=String.Format('Error: {0}\r\nContext: {1}\r\nHelp:{2}.',sMessage,sContext,sHelp);
     finally
            FormatErrorForLog:= sResult;
     end;
