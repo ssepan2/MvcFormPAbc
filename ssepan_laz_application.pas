@@ -5,8 +5,8 @@
 interface
 
 uses
-  Classes, SysUtils,Controls,Forms,ComCtrls,
-  StdCtrls, ExtCtrls, Graphics, Ssepan_Laz_Utility;
+  {Classes, SysUtils,Controls,Forms,ComCtrls,
+  StdCtrls, ExtCtrls, Graphics}System, System.Drawing, System.Windows.Forms, Ssepan_Laz_Utility;
 
 //type
 
@@ -17,30 +17,30 @@ Procedure StartProgressBarWithPicture
           sStatusMessage, sErrorMessage : String;
           isMarqueeProgressBarStyle, isCountProgressbar:Boolean;
           iProgressBarValue, iProgressBarMax:LongInt;
-          var ctlStatusMessage, ctlErrorMessage: TLabel;
-          var ctlProgressBar:TProgressBar;
-          var ctlActionIcon:TImage;
-           objImage:TBitmap
+          var ctlStatusMessage, ctlErrorMessage: ToolStripStatusLabel;
+          var ctlProgressBar:ToolStripProgressBar;
+          var ctlActionIcon:ToolStripStatusLabel;
+           objImage:Image
 );
 procedure UpdateProgressBar
 (
           sStatusMessage : String;
           isMarqueeProgressBarStyle, isCountProgressbar:Boolean;
           iProgressBarValue:LongInt;
-          var ctlStatusMessage: TLabel;
-          var ctlProgressBar:TProgressBar
+          var ctlStatusMessage: ToolStripStatusLabel;
+          var ctlProgressBar:ToolStripProgressBar
 );
 procedure UpdateStatusBarMessages
 (
           sStatusMessage, sErrorMessage : String;
-          var ctlStatusMessage, ctlErrorMessage: TLabel
+          var ctlStatusMessage, ctlErrorMessage: ToolStripStatusLabel
 );
 procedure StopProgressBar
 (
           sStatusMessage, sErrorMessage : String;
-          var ctlStatusMessage, ctlErrorMessage: TLabel;
-          var ctlProgressBar:TProgressBar;
-          var ctlActionIcon:TImage
+          var ctlStatusMessage, ctlErrorMessage: ToolStripStatusLabel;
+          var ctlProgressBar:ToolStripProgressBar;
+          var ctlActionIcon:ToolStripStatusLabel
 );
 
 implementation
@@ -70,20 +70,20 @@ implementation
 // <param name="isCountProgressbar">Boolean</param>
 // <param name="iProgressBarValue">LongInt</param>
 // <param name="iProgressBarMax">LongInt. ignored when using marquee or using normal and not count (i.e. - percentage); defaults to 100</param>
-// <param name="ctlStatusMessage">TLabel</param>
-// <param name="ctlErrorMessage">TLabel</param>
-// <param name="ctlProgressBar">TProgressBar</param>
-// <param name="ctlActionIcon">TImage</param>
-// <param name="objImage">TBitmap</param>
+// <param name="ctlStatusMessage">ToolStripStatusLabel</param>
+// <param name="ctlErrorMessage">ToolStripStatusLabel</param>
+// <param name="ctlProgressBar">ToolStripProgressBar</param>
+// <param name="ctlActionIcon">ToolStripStatusLabel</param>
+// <param name="objImage">Image</param>
 Procedure StartProgressBarWithPicture
 (
   sStatusMessage, sErrorMessage : String;
   isMarqueeProgressBarStyle, isCountProgressbar:Boolean;
   iProgressBarValue, iProgressBarMax:LongInt;
-  var ctlStatusMessage, ctlErrorMessage: TLabel;
-  var ctlProgressBar:TProgressBar;
-  var ctlActionIcon:TImage;
-   objImage:TBitmap
+  var ctlStatusMessage, ctlErrorMessage: ToolStripStatusLabel;
+  var ctlProgressBar:ToolStripProgressBar;
+  var ctlActionIcon:ToolStripStatusLabel;
+  objImage:Image
 );
 begin
   try
@@ -94,56 +94,56 @@ begin
        if (isMarqueeProgressBarStyle) then
        begin
             //marquee
-            ctlProgressBar.Style:=pbstMarquee;
-            ctlProgressBar.Max:=100;//
-            ctlProgressBar.Step := 1;//
-            ctlProgressBar.Position := 33;//one third
+            ctlProgressBar.Style:= ProgressBarStyle.Marquee;
+            ctlProgressBar.Maximum:=100;
+            ctlProgressBar.Step := 1;
+            ctlProgressBar.Value := 33;//one third
        end
        else
        begin
             //progress
             //if Style is not Marquee, then we are marking either a count or percentage
-            ctlProgressBar.Style:=pbstNormal;
+            ctlProgressBar.Style:=ProgressBarStyle.Blocks;
             if (isCountProgressbar) then
             begin
                  //count
                  //set to smooth if count is used.
-                 ctlProgressBar.Smooth:=True;
-                 ctlProgressBar.Max:=iProgressBarMax;
+                 ctlProgressBar.Style := ProgressBarStyle.Continuous;
+                 ctlProgressBar.Maximum:=iProgressBarMax;
 
             end
             else
             begin
                  //percentage
                  //set to blocks if actual percentage is used.
-                 ctlProgressBar.Smooth:=False;
-                 ctlProgressBar.Max:=100;//
+                 ctlProgressBar.Style := ProgressBarStyle.Blocks;
+                 ctlProgressBar.Maximum:=100;//
 
             end;
 
             //set to value if percentage or count used.
             ctlProgressBar.Step := 1;
-            ctlProgressBar.Position := iProgressBarValue;
+            ctlProgressBar.Value := iProgressBarValue;
        end;
 
-      if (sStatusMessage=Null) then ctlStatusMessage.Caption := '' else ctlStatusMessage.Caption := sStatusMessage;
+      if (sStatusMessage='') then ctlStatusMessage.Text := '' else ctlStatusMessage.Text := sStatusMessage;
 
-      if (sErrorMessage=Null) then ctlErrorMessage.Caption := '' else ctlErrorMessage.Caption := sErrorMessage;
-      ctlErrorMessage.Hint := ctlErrorMessage.Caption;
+      if (sErrorMessage='') then ctlErrorMessage.Text := '' else ctlErrorMessage.Text := sErrorMessage;
+      ctlErrorMessage.ToolTipText := ctlErrorMessage.Text;
 
       if (objImage <> nil) then
       begin
-        if objImage.HandleAllocated then ctlActionIcon.Picture.Assign(objImage);
-        ctlActionIcon.Hint := sStatusMessage;
+        ctlActionIcon.Image := objImage;
+        ctlActionIcon.ToolTipText := sStatusMessage;
         ctlActionIcon.Visible := True;
       end;
     finally
       //give the app time to draw the eye-candy, even if its only for an instant
-      Application.ProcessMessages;
+      Application.DoEvents;//ProcessMessages;
     end;
   except
-    on E: Exception do
-      LogErrorToFile(FormatErrorForLog(E.Message , 'StartProgressBarWithPicture' , E.HelpContext.ToString));
+    on Ex: Exception do
+      LogErrorToFile(FormatErrorForLog(Ex.Message , 'StartProgressBarWithPicture' , Ex.StackTrace.ToString));
     //
     //    Error.Propagate 'Throw  }
   end;
@@ -158,21 +158,21 @@ End; //procedure
 // <param name="isMarqueeProgressBarStyle">Boolean</param>
 // <param name="isCountProgressbar">Boolean</param>
 // <param name="iProgressBarValue">LongInt. UpdateProgressBar does not manage the value, other than checking that it is within the range, and adjusting the Max for counting mode.</param>
-// <param name="ctlStatusMessage">TLabel</param>
-// <param name="ctlProgressBar">TProgressBar</param>
+// <param name="ctlStatusMessage">ToolStripStatusLabel</param>
+// <param name="ctlProgressBar">ToolStripProgressBar</param>
 procedure UpdateProgressBar
 (
           sStatusMessage : String;
           isMarqueeProgressBarStyle, isCountProgressbar:Boolean;
           iProgressBarValue:LongInt;
-          var ctlStatusMessage: TLabel;
-          var ctlProgressBar:TProgressBar
+          var ctlStatusMessage: ToolStripStatusLabel;
+          var ctlProgressBar:ToolStripProgressBar
 );
 begin
   try
     try
 
-    if (sStatusMessage=Null) then {ctlStatusMessage.Caption := ''} else ctlStatusMessage.Caption := sStatusMessage;
+    if (sStatusMessage='') then {ctlStatusMessage.Text := ''} else ctlStatusMessage.Text := sStatusMessage;
 
     if (isMarqueeProgressBarStyle) then
      begin
@@ -185,22 +185,22 @@ begin
           //if we are simply counting, the progress bar will periodically need to adjust the Maximum.
           if (isCountProgressbar) then
           begin
-            If (iProgressBarValue > ctlProgressBar.Max) Then
+            If (iProgressBarValue > ctlProgressBar.Maximum) Then
             begin
-                 ctlProgressBar.Max := iProgressBarValue * 2;
+                 ctlProgressBar.Maximum := iProgressBarValue * 2;
             end;
           end;
 
-          ctlProgressBar.Position := iProgressBarValue;
+          ctlProgressBar.Value := iProgressBarValue;
     end;
 
     finally
       //give the app time to draw the eye-candy, even if its only for an instant
-        Application.ProcessMessages;
+        Application.DoEvents;
     end;
   except
-    on E: Exception do
-      LogErrorToFile(FormatErrorForLog(E.Message , 'UpdateProgressBar' , E.HelpContext.ToString));
+    on Ex: Exception do
+      LogErrorToFile(FormatErrorForLog(Ex.Message , 'UpdateProgressBar' , Ex.StackTrace.ToString));
     //
     //    Error.Propagate //Throw
   end;
@@ -212,29 +212,29 @@ end; //Sub
 // </summary>
 // <param name="sStatusMessage">String</param>
 // <param name="serrorMessage">String</param>
-// <param name="ctlStatusMessage">TLabel</param>
-// <param name="ctlErrorMessage">TLabel</param>
+// <param name="ctlStatusMessage">ToolStripStatusLabel</param>
+// <param name="ctlErrorMessage">ToolStripStatusLabel</param>
 procedure UpdateStatusBarMessages
 (
           sStatusMessage, sErrorMessage : String;
-          var ctlStatusMessage, ctlErrorMessage: TLabel
+          var ctlStatusMessage, ctlErrorMessage: ToolStripStatusLabel
 );
 begin
   try
     try
-       if (sStatusMessage=Null) then {ctlStatusMessage.Caption := ''} else ctlStatusMessage.Caption := sStatusMessage;
+       if (sStatusMessage='') then {ctlStatusMessage.Text := ''} else ctlStatusMessage.Text := sStatusMessage;
 
-       if (sErrorMessage=Null) then {ctlErrorMessage.Caption := ''} else ctlErrorMessage.Caption := sErrorMessage;
-       ctlErrorMessage.Hint := ctlErrorMessage.Caption;
+       if (sErrorMessage='') then {ctlErrorMessage.Text := ''} else ctlErrorMessage.Text := sErrorMessage;
+       ctlErrorMessage.ToolTipText := ctlErrorMessage.Text;
 
     finally
       //give the app time to draw the eye-candy, even if its only for an instant
-      Application.ProcessMessages;
+      Application.DoEvents;
     end;
 
   except
-    on E: Exception do
-      LogErrorToFile(FormatErrorForLog(E.Message , 'UpdateStatusBarMessages' , E.HelpContext.ToString));
+    on Ex: Exception do
+      LogErrorToFile(FormatErrorForLog(Ex.Message , 'UpdateStatusBarMessages' , Ex.StackTrace.ToString));
     //
     //    Error.Propagate 'Throw
   end;
@@ -248,27 +248,27 @@ End; //Sub
 // </summary>
 // <param name="sStatusMessage">String</param>
 // <param name="serrorMessage">String</param>
-// <param name="ctlStatusMessage">TLabel</param>
-// <param name="ctlErrorMessage">TLabel</param>
-// <param name="ctlProgressBar">TProgressBar</param>
-// <param name="ctlActionIcon">TImage</param>
+// <param name="ctlStatusMessage">ToolStripStatusLabel</param>
+// <param name="ctlErrorMessage">ToolStripStatusLabel</param>
+// <param name="ctlProgressBar">ToolStripProgressBar</param>
+// <param name="ctlActionIcon">ToolStripStatusLabel</param>
 procedure StopProgressBar
 (
           sStatusMessage, sErrorMessage : String;
-          var ctlStatusMessage, ctlErrorMessage: TLabel;
-          var ctlProgressBar:TProgressBar;
-          var ctlActionIcon:TImage
+          var ctlStatusMessage, ctlErrorMessage: ToolStripStatusLabel;
+          var ctlProgressBar:ToolStripProgressBar;
+          var ctlActionIcon:ToolStripStatusLabel
 );
 begin
     try
        try
 
-          if (sStatusMessage=Null) then ctlStatusMessage.Caption := '' else ctlStatusMessage.Caption := sStatusMessage;
+          if (sStatusMessage='') then ctlStatusMessage.Text := '' else ctlStatusMessage.Text := sStatusMessage;
 
           //do not clear error at end of operation, clear it at start of operation
-          if (sErrorMessage=Null) then {do nothing} else ctlErrorMessage.Caption := sErrorMessage;
+          if (sErrorMessage='') then {do nothing} else ctlErrorMessage.Text := sErrorMessage;
           //sync
-          ctlErrorMessage.Hint := ctlErrorMessage.Caption;
+          ctlErrorMessage.ToolTipText := ctlErrorMessage.Text;
 
           ctlProgressBar.Enabled:=False;
           ctlProgressBar.Visible:=False;
@@ -280,12 +280,12 @@ begin
            ctlProgressBar.Visible:=False;
 
           //give the app time to draw the eye-candy, even if its only for an instant
-          Application.ProcessMessages;
+          Application.DoEvents;
         end;
 
      except
-       on E: Exception do
-         LogErrorToFile(FormatErrorForLog(E.Message , 'StopProgressBar' , E.HelpContext.ToString));
+       on Ex: Exception do
+         LogErrorToFile(FormatErrorForLog(Ex.Message , 'StopProgressBar' , Ex.StackTrace.ToString));
          //
          //    Error.Propagate 'Throw
      end;

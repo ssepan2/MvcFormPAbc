@@ -69,8 +69,6 @@ procedure InitializeComponent;
         self.lblStatus := new System.Windows.Forms.ToolStripStatusLabel();
         self.lblError := new System.Windows.Forms.ToolStripStatusLabel();
         self.prgProgress := new System.Windows.Forms.ToolStripProgressBar();
-        self.btnAction := new System.Windows.Forms.ToolStripDropDownButton();
-        self.btnDirty := new System.Windows.Forms.ToolStripDropDownButton();
         self.SomeStringLabel := new System.Windows.Forms.Label();
         self.SomeIntegerLabel := new System.Windows.Forms.Label();
         self.SomeDateLabel := new System.Windows.Forms.Label();
@@ -78,6 +76,8 @@ procedure InitializeComponent;
         self.SomeStringEdit := new System.Windows.Forms.TextBox();
         self.SomeIntegerEdit := new System.Windows.Forms.TextBox();
         self.SomeDateEdit := new System.Windows.Forms.DateTimePicker();
+        self.lblAction := new System.Windows.Forms.ToolStripStatusLabel();
+        self.lblDirty := new System.Windows.Forms.ToolStripStatusLabel();
         self.menuStrip.SuspendLayout();
         self.toolStrip.SuspendLayout();
         self.statusStrip.SuspendLayout();
@@ -574,7 +574,7 @@ procedure InitializeComponent;
         // 
         // statusStrip
         // 
-        self.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[5](self.lblStatus, self.lblError, self.prgProgress, self.btnAction, self.btnDirty));
+        self.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[5](self.lblStatus, self.lblError, self.prgProgress, self.lblAction, self.lblDirty));
         self.statusStrip.Location := new System.Drawing.Point(0, 420);
         self.statusStrip.Name := 'statusStrip';
         self.statusStrip.Size := new System.Drawing.Size(624, 22);
@@ -598,26 +598,6 @@ procedure InitializeComponent;
         self.prgProgress.Name := 'prgProgress';
         self.prgProgress.Size := new System.Drawing.Size(100, 16);
         self.prgProgress.Visible := false;
-        // 
-        // btnAction
-        // 
-        self.btnAction.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.btnAction.Image := (System.Drawing.Image(resources.GetObject('btnAction.Image')));
-        self.btnAction.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.btnAction.Name := 'btnAction';
-        self.btnAction.Size := new System.Drawing.Size(29, 20);
-        self.btnAction.Text := 'toolStripDropDownButton1';
-        self.btnAction.Visible := false;
-        // 
-        // btnDirty
-        // 
-        self.btnDirty.DisplayStyle := System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-        self.btnDirty.Image := (System.Drawing.Image(resources.GetObject('btnDirty.Image')));
-        self.btnDirty.ImageTransparentColor := System.Drawing.Color.Magenta;
-        self.btnDirty.Name := 'btnDirty';
-        self.btnDirty.Size := new System.Drawing.Size(29, 20);
-        self.btnDirty.Text := 'toolStripDropDownButton2';
-        self.btnDirty.Visible := false;
         // 
         // SomeStringLabel
         // 
@@ -680,6 +660,22 @@ procedure InitializeComponent;
         self.SomeDateEdit.Size := new System.Drawing.Size(200, 20);
         self.SomeDateEdit.TabIndex := 9;
         self.SomeDateEdit.ValueChanged += SomeDateEdit_ValueChanged;
+        // 
+        // lblAction
+        // 
+        self.lblAction.Image := (System.Drawing.Image(resources.GetObject('lblAction.Image')));
+        self.lblAction.Name := 'lblAction';
+        self.lblAction.Size := new System.Drawing.Size(16, 17);
+        self.lblAction.ToolTipText := 'Action';
+        self.lblAction.Visible := false;
+        // 
+        // lblDirty
+        // 
+        self.lblDirty.Image := (System.Drawing.Image(resources.GetObject('lblDirty.Image')));
+        self.lblDirty.Name := 'lblDirty';
+        self.lblDirty.Size := new System.Drawing.Size(16, 17);
+        self.lblDirty.ToolTipText := 'Dirty';
+        self.lblDirty.Visible := false;
         // 
         // MainForm
         // 

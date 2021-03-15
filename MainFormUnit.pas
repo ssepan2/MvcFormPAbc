@@ -2,7 +2,7 @@
 
 interface
 
-uses System, System.Drawing, System.Windows.Forms, Microsoft.VisualBasic, ModelBase, SomeModel, ssepan_laz_utility;
+uses System, System.Drawing, System.Windows.Forms, Microsoft.VisualBasic, ModelBase, SomeModel, ssepan_laz_utility, ssepan_laz_application;
 
 type
   MainForm = class(Form)
@@ -81,8 +81,6 @@ type
     lblStatus: ToolStripStatusLabel;
     lblError: ToolStripStatusLabel;
     prgProgress: ToolStripProgressBar;
-    btnAction: ToolStripDropDownButton;
-    btnDirty: ToolStripDropDownButton;
     mnuEditUndo: ToolStripMenuItem;
     mnuEditRedo: ToolStripMenuItem;
     toolStripMenuItem3: ToolStripSeparator;
@@ -138,6 +136,8 @@ type
     SomeStringEdit: TextBox;
     SomeIntegerEdit: TextBox;
     SomeDateEdit: DateTimePicker;
+    lblAction: ToolStripStatusLabel;
+    lblDirty: ToolStripStatusLabel;
     mnuHelp: ToolStripMenuItem;
     {$include MainFormUnit.MainForm.inc}
   {$endregion FormDesigner}
@@ -149,7 +149,10 @@ type
     function FileOpen() : Boolean;  
     function FileSave(bSaveAs : Boolean; var sStatusMessage:String) : Boolean;  
     function CheckForSaveOrCancel(var sStatusMessage:String) : Boolean;
-    
+    procedure ActionFileNewOnExecute(sender: Object; e: EventArgs);    
+    procedure ActionFileOpenOnExecute(sender: Object; e: EventArgs);
+    procedure ActionFileSaveOnExecute(sender: Object; e: EventArgs);
+    procedure ActionFileSaveAsOnExecute(sender: Object; e: EventArgs);
   public
     constructor;
     begin
@@ -240,7 +243,7 @@ begin
             end;
             'Dirty':
             begin
-                //ToolStripDropDownButton(self.statusStrip.Items.Find('imgDirtyIcon', False)).Visible := objModel.Dirty; //use wrapper sub in viewmodel
+                ToolStripStatusLabel(self.statusStrip.Items.Find('lblDirty', False)[0]).Visible := objModel.Dirty; //TODO:use wrapper sub in viewmodel
 
                 formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.Dirty.ToString());
                 WriteLn(formatResult);
@@ -450,205 +453,213 @@ end;
 //TODO:action code here
 //
 //{File}
-//procedure TMainForm.ActionFileNewOnExecute(Sender: TObject);
-//var
-//   sStatusMessage,sStatusMessageFromCheck,sErrorMessage:String;
-//   bCancel : Boolean;
-//begin
-//   try
-//       try
-//          sStatusMessageFromCheck := '';
-//          bCancel := CheckForSaveOrCancel(sStatusMessageFromCheck);
-//
-//           //clear status, error messages at beginning of every action
-//          sStatusMessage:='New...';
-//          sErrorMessage:='';
-//
-//          //use progress bar (marquee) with action icon (where available) in status bar
-//          StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbFileNew.Glyph);
-//
-//          //perform sender disable/enable in all actions
-//          TAction(Sender).Enabled := False;
-//
-//          If bCancel Then
-//          begin
-//              sStatusMessage := 'New cancelled.';
-//          end
-//          Else
-//          begin
-//              //NEW
-//             if Not FileNew() Then
-//             begin
-//                raise Exception.Create('New failed.');
-//             end;
-//             sStatusMessage := 'New done.';
-//          End;
-//       finally
-//         //always do this
-//         TAction(Sender).Enabled := True;
-//         ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//       end;
-//     except
-//         on E: Exception do
-//         begin
-//            sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileNewOnExecute' , Ex.StackTrace.ToString);
-//            StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//            LogErrorToFile(sErrorMessage);
-//         end;
-//     end;
-//end;
-//
-//procedure TMainForm.ActionFileOpenOnExecute(Sender: TObject);
-//var
-//   sStatusMessage,sStatusMessageFromCheck,sErrorMessage,formatResult,sResponse:String;
-//   bCancel : Boolean;
-//begin
-//   try
-//     try
-//        sStatusMessageFromCheck := '';
-//        bCancel := CheckForSaveOrCancel(sStatusMessageFromCheck);
-//
-//         //clear status, error messages at beginning of every action
-//        sStatusMessage:='Opening...';
-//        sErrorMessage:='';
-//
-//        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbFileOpen.Glyph);//, sbFileNew.Images[0].Image, True, 33);
-//
-//        //perform sender disable/enable in all actions
-//        TAction(Sender).Enabled := False;
-//
-//         If bCancel Then
-//         begin
-//             sStatusMessage := 'Open cancelled during Save.';
-//         end
-//         Else
-//         begin
-//            sResponse := InputBox('Open...', 'Please enter model name:', '');
-//            if (Not String.IsNullOrWhiteSpace(sResponse) And (sResponse <> TModelBase.KEY_NEW)) then
-//            begin
-//                //TODO:implement VerifyKey
-//                //If Not objModel.VerifyKey(nil, sResponse, 'TODO:Path') Then
-//                //begin
-//                //  FmtStr(formatResult,'ID not found in settings: Slot =''{0}''', [sResponse]);
-//                //  raise Exception.Create(formatResult);
-//                //end
-//                //Else
-//                //begin
-//                    objModel.Key := sResponse;
-//                //End;
-//            end
-//            Else
-//            begin
-//                bCancel := True;
-//            End;
-//
-//            If bCancel Then
-//            begin
-//                sStatusMessage := 'Open cancelled during model name input.';
-//            end
-//            Else
-//            begin
-//                //OPEN
-//               if Not FileOpen() Then
-//               begin
-//                  raise Exception.Create('open failed.');
-//               end;
-//               sStatusMessage := sStatusMessageFromCheck +'; Open done.';//in rare cases, we will want to get a message from the check
-//            End;
-//         End;
-//
-//     finally
-//       //always do this
-//       TAction(Sender).Enabled := True;
-//       StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//     end;
-//   except
-//       on E: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileOpenOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//   end;
-//
-//end;
-//
-//procedure TMainForm.ActionFileSaveOnExecute(Sender: TObject);
-//var
-//   sStatusMessage,sErrorMessage:String;
-//begin
-//   try
-//     try
-//        //clear status, error messages at beginning of every action
-//        sStatusMessage:='Saving...';
-//        sErrorMessage:='';
-//
-//        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbFileSave.Glyph);//, sbFileNew.Images[0].Image, True, 33);
-//
-//        //perform sender disable/enable in all actions
-//        TAction(Sender).Enabled := False;
-//
-//        //SAVE
-//        //save properties to INI
-//        if Not FileSave(False, sStatusMessage) Then
-//        begin
-//          raise Exception.Create('Save failed.');
-//        end;
-//     finally
-//         //always do this
-//         TAction(Sender).Enabled := True;
-//         StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//     end;
-//   except
-//       on E: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileSaveOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//   end;
-//end;
-//
-//procedure TMainForm.ActionFileSaveAsOnExecute(Sender: TObject);
-//var
-//   sStatusMessage,sErrorMessage:String;
-//begin
-//   try
-//     try
-//         //clear status, error messages at beginning of every action
-//         sStatusMessage:='Saving As...';
-//         sErrorMessage:='';
-//
-//        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbFileSaveAs.Glyph);//, sbFileNew.Images[0].Image, True, 33);
-//
-//        //perform sender disable/enable in all actions
-//        TAction(Sender).Enabled := False;
-//
-//        //SAVE
-//        //save properties to INI
-//         if Not FileSave(True, sStatusMessage) Then
-//         begin
-//            raise Exception.Create('Save As failed.');
-//         end;
-//     finally
-//       //always do this
-//       TAction(Sender).Enabled := True;
-//       StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//     end;
-//   except
-//       on E: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileSaveAsOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//   end;
-//end;
-//
-//procedure TMainForm.ActionFilePrintOnExecute(Sender: TObject);
+procedure MainForm.ActionFileNewOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage,sStatusMessageFromCheck,sErrorMessage:String;
+   bCancel : Boolean;
+begin
+   try
+       try
+          sStatusMessageFromCheck := '';
+          bCancel := CheckForSaveOrCancel(sStatusMessageFromCheck);
+
+           //clear status, error messages at beginning of every action
+          sStatusMessage:='New...';
+          sErrorMessage:='';
+
+          //use progress bar (marquee) with action icon (where available) in status bar
+          StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFileNew.Image);
+
+          //perform sender disable/enable in all actions
+          self.mnuFileNew.Enabled := False;
+          self.btnFileNew.Enabled := False;
+
+          If bCancel Then
+          begin
+              sStatusMessage := 'New cancelled.';
+          end
+          Else
+          begin
+              //NEW
+             if Not FileNew() Then
+             begin
+                raise Exception.Create('New failed.');
+             end;
+             sStatusMessage := 'New done.';
+          End;
+       finally
+         //always do this
+          self.mnuFileNew.Enabled := True;
+          self.btnFileNew.Enabled := True;
+         ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+       end;
+     except
+         on Ex: Exception do
+         begin
+            sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileNewOnExecute' , Ex.StackTrace.ToString);
+            StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+            LogErrorToFile(sErrorMessage);
+         end;
+     end;
+end;
+
+procedure MainForm.ActionFileOpenOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage,sStatusMessageFromCheck,sErrorMessage,formatResult,sResponse:String;
+   bCancel : Boolean;
+begin
+   try
+     try
+        sStatusMessageFromCheck := '';
+        bCancel := CheckForSaveOrCancel(sStatusMessageFromCheck);
+
+         //clear status, error messages at beginning of every action
+        sStatusMessage:='Opening...';
+        sErrorMessage:='';
+
+        //use progress bar (marquee) with action icon (where available) in status bar
+        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFileOpen.Image);//
+
+        //perform sender disable/enable in all actions
+        self.mnuFileOpen.Enabled := False;
+        self.btnFileOpen.Enabled := False;
+
+         If bCancel Then
+         begin
+             sStatusMessage := 'Open cancelled during Save.';
+         end
+         Else
+         begin
+            sResponse := Interaction.InputBox('Open...', 'Please enter model name:', '');
+            if (Not String.IsNullOrWhiteSpace(sResponse) And (sResponse <> ModelBase.KEY_NEW)) then
+            begin
+                //TODO:implement VerifyKey
+                //If Not objModel.VerifyKey(nil, sResponse, 'TODO:Path') Then
+                //begin
+                //  FmtStr(formatResult,'ID not found in settings: Slot =''{0}''', [sResponse]);
+                //  raise Exception.Create(formatResult);
+                //end
+                //Else
+                //begin
+                    objModel.Key := sResponse;
+                //End;
+            end
+            Else
+            begin
+                bCancel := True;
+            End;
+
+            If bCancel Then
+            begin
+                sStatusMessage := 'Open cancelled during model name input.';
+            end
+            Else
+            begin
+                //OPEN
+               if Not FileOpen() Then
+               begin
+                  raise Exception.Create('open failed.');
+               end;
+               sStatusMessage := sStatusMessageFromCheck +'; Open done.';//in rare cases, we will want to get a message from the check
+            End;
+         End;
+
+     finally
+       //always do this
+        self.mnuFileOpen.Enabled := True;
+        self.btnFileOpen.Enabled := True;
+       StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileOpenOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+   end;
+
+end;
+
+procedure MainForm.ActionFileSaveOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage,sErrorMessage:String;
+begin
+   try
+     try
+        //clear status, error messages at beginning of every action
+        sStatusMessage:='Saving...';
+        sErrorMessage:='';
+
+        //use progress bar (marquee) with action icon (where available) in status bar
+        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFileSave.Image);//
+
+        //perform sender disable/enable in all actions
+        self.mnuFileSave.Enabled := False;
+        self.btnFileSave.Enabled := False;
+
+        //SAVE
+        //save properties to INI
+        if Not FileSave(False, sStatusMessage) Then
+        begin
+          raise Exception.Create('Save failed.');
+        end;
+     finally
+         //always do this
+        self.mnuFileSave.Enabled := True;
+        self.btnFileSave.Enabled := True;
+         StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileSaveOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+   end;
+end;
+
+procedure MainForm.ActionFileSaveAsOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage,sErrorMessage:String;
+begin
+   try
+     try
+         //clear status, error messages at beginning of every action
+         sStatusMessage:='Saving As...';
+         sErrorMessage:='';
+
+        //use progress bar (marquee) with action icon (where available) in status bar
+        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFileSaveAs.Image);//
+
+        //perform sender disable/enable in all actions
+        self.mnuFileSaveAs.Enabled := False;
+        //self.btnFileSaveAs.Enabled := False;
+
+        //SAVE
+        //save properties to INI
+         if Not FileSave(True, sStatusMessage) Then
+         begin
+            raise Exception.Create('Save As failed.');
+         end;
+     finally
+       //always do this
+        self.mnuFileSaveAs.Enabled := True;
+        //self.btnFileSaveAs.Enabled := True;
+       StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileSaveAsOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+   end;
+end;
+
+//procedure MainForm.ActionFilePrintOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -660,10 +671,11 @@ end;
 //        sErrorMessage:='';
 //
 //        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbFilePrint.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuFilePrint.Image);//
 //
 //        //perform sender disable/enable in all actions
-//        TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then //TODO:TPrintDialog
 //        begin
@@ -675,14 +687,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFilePrintOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -690,7 +703,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionFilePrintSetupOnExecute(Sender: TObject);
+//procedure MainForm.ActionFilePrintSetupOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -702,10 +715,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then  //TODO:TPrinterSetupDialog
 //        begin
@@ -717,14 +731,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFilePrintSetupOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -732,7 +747,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionFileExitOnExecute(Sender: TObject);
+//procedure MainForm.ActionFileExitOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage,sStatusMessageFromCheck, sErrorMessage:String;
 //   bCancel : Boolean;
@@ -747,10 +762,11 @@ end;
 //       sErrorMessage:='';
 //
 //       //use progress bar (marquee) with action icon (where available) in status bar
-//       StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//       StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //       //perform sender disable/enable in all actions
-//       TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If bCancel Then
 //        begin
@@ -764,14 +780,15 @@ end;
 //
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionFileExitOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -780,7 +797,7 @@ end;
 //end;
 //
 //{Edit}
-//procedure TMainForm.ActionEditUndoOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditUndoOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -792,10 +809,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditUndo.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditUndo.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -807,14 +825,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditUndoOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -822,7 +841,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditRedoOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditRedoOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -834,10 +853,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditRedo.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditRedo.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -849,14 +869,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditRedoOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -864,7 +885,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditSelectAllOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditSelectAllOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -876,10 +897,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -891,14 +913,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditSelectAllOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -906,7 +929,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditCutOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditCutOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -918,10 +941,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditCut.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditCut.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -933,14 +957,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditCutOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -948,7 +973,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditCopyOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditCopyOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -960,10 +985,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditCopy.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditCopy.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -975,14 +1001,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditCopyOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -990,7 +1017,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditPasteExecute(Sender: TObject);
+//procedure MainForm.ActionEditPasteExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1002,10 +1029,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditPaste.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditPaste.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1017,14 +1045,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPasteExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1032,7 +1061,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditPasteSpecialOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditPasteSpecialOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1044,10 +1073,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1059,14 +1089,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPasteSpecialOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1074,7 +1105,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditFindOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditFindOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1086,10 +1117,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditFind.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditFind.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then //TODO:TFindDialog
 //        begin
@@ -1101,14 +1133,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditFindOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1116,7 +1149,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditReplaceOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditReplaceOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1128,10 +1161,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditReplace.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditReplace.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then    //TODO:TReplaceDialog
 //        begin
@@ -1143,14 +1177,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditReplaceOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1158,7 +1193,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditGoToOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditGoToOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1170,10 +1205,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1185,14 +1221,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditGoToOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1200,7 +1237,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditRefreshOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditRefreshOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1212,10 +1249,11 @@ end;
 //        sErrorMessage:='';
 //
 //        //use progress bar (marquee) with action icon (where available) in status bar
-//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditRefresh.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//        StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditRefresh.Image);//
 //
 //        //perform sender disable/enable in all actions
-//        TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        //TODO:replace Something() with this?
 //        objModel.RefreshModel(False); //to update view
@@ -1230,14 +1268,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditRefreshOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1245,7 +1284,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionEditPreferencesOnExecute(Sender: TObject);
+//procedure MainForm.ActionEditPreferencesOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1257,10 +1296,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbEditPreferences.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuEditPreferences.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1272,14 +1312,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionEditPreferencesOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1288,7 +1329,7 @@ end;
 //end;
 //
 //{Window}
-//procedure TMainForm.ActionWindowCascadeOnExecute(Sender: TObject);
+//procedure MainForm.ActionWindowCascadeOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1300,10 +1341,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1315,14 +1357,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowCascadeOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1330,7 +1373,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionWindowHideExecute(Sender: TObject);
+//procedure MainForm.ActionWindowHideExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1342,10 +1385,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1357,14 +1401,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowHideExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1372,7 +1417,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionWindowNewWindowOnExecute(Sender: TObject);
+//procedure MainForm.ActionWindowNewWindowOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1384,10 +1429,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1399,14 +1445,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowNewWindowOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1414,7 +1461,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionWindowShowExecute(Sender: TObject);
+//procedure MainForm.ActionWindowShowExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1426,10 +1473,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1441,14 +1489,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowShowExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1456,7 +1505,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionWindowTileOnExecute(Sender: TObject);
+//procedure MainForm.ActionWindowTileOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1468,10 +1517,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1483,14 +1533,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowTileOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1498,7 +1549,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionWindowArrangeAllExecute(Sender: TObject);
+//procedure MainForm.ActionWindowArrangeAllExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1510,10 +1561,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1525,14 +1577,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionWindowArrangeAllExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1541,7 +1594,7 @@ end;
 //end;
 //
 //{Help}
-//procedure TMainForm.ActionHelpHelpContentsOnExecute(Sender: TObject);
+//procedure MainForm.ActionHelpHelpContentsOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1553,10 +1606,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, sbHelpContents.Glyph);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuHelpContents.Image);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1568,21 +1622,22 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpContentsOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
 //   end;
 //end;
 //
-//procedure TMainForm.ActionHelpHelpIndexOnExecute(Sender: TObject);
+//procedure MainForm.ActionHelpHelpIndexOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1594,10 +1649,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1609,21 +1665,22 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpIndexOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
 //   end;
 //end;
 //
-//procedure TMainForm.ActionHelpLicenceInformationOnExecute(Sender: TObject);
+//procedure MainForm.ActionHelpLicenceInformationOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1635,10 +1692,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1650,21 +1708,22 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpLicenceInformationOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
 //   end;
 //end;
 //
-//procedure TMainForm.ActionHelpOnlineHelpOnExecute(Sender: TObject);
+//procedure MainForm.ActionHelpOnlineHelpOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1676,10 +1735,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1691,21 +1751,22 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpOnlineHelpOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
 //   end;
 //end;
 //
-//procedure TMainForm.ActionHelpCheckForUpdatesOnExecute(Sender: TObject);
+//procedure MainForm.ActionHelpCheckForUpdatesOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1717,10 +1778,11 @@ end;
 //    sErrorMessage:='';
 //
 //    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon, Nil);//, sbFileNew.Images[0].Image, True, 33);
+//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1732,14 +1794,15 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
+//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //     end;
 //   except
-//       on E: Exception do
+//       on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpCheckForUpdatesOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatusMessage, lblErrorMessage, ProgressBar, imgActionIcon);
+//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
 //          LogErrorToFile(sErrorMessage);
 //       end;
 //
@@ -1747,7 +1810,7 @@ end;
 //
 //end;
 //
-//procedure TMainForm.ActionHelpAboutOnExecute(Sender: TObject);
+//procedure MainForm.ActionHelpAboutOnExecute(sender: Object; e: EventArgs);
 //var
 //   sStatusMessage:String;
 //   sErrorMessage:String;
@@ -1772,10 +1835,11 @@ end;
 //     ProgressBar,
 //     imgActionIcon,
 //     MenuHelpAbout.Bitmap
-//     );//, sbFileNew.Images[0].Image, True, 33);
+//     );//
 //
 //    //perform sender disable/enable in all actions
-//    TAction(Sender).Enabled := False;
+//          self.mnuXxxYyy.Enabled := False;
+//          //self.btnXxxYyy.Enabled := False;
 //
 //        If Something() Then
 //        begin
@@ -1787,7 +1851,8 @@ end;
 //        End;
 //     finally
 //       //always do this
-//       TAction(Sender).Enabled := True;
+//          self.mnuXxxYyy.Enabled := True;
+//          //self.btnXxxYyy.Enabled := True;
 //       StopProgressBar
 //       (
 //        sStatusMessage,
@@ -1799,7 +1864,7 @@ end;
 //        );
 //     end;
 //   except
-//         on E: Exception do
+//         on Ex: Exception do
 //       begin
 //          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpAboutOnExecute' , Ex.StackTrace.ToString);
 //          StopProgressBar
@@ -1826,22 +1891,22 @@ Menu
 }
 procedure MainForm.mnuFileNew_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FileNew';
+  ActionFileNewOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuFileOpen_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FileOpen';
+  ActionFileOpenOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuFileSave_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FileSave';
+  ActionFileSaveOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuFileSaveAs_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='FileSaveAs';
+  ActionFileSaveAsOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuFilePrint_Click(sender: Object; e: EventArgs);
