@@ -478,9 +478,9 @@ end;
 
 {Actions}
 
-//TODO:action code here
-//
-//{File}
+{$region Actions}
+
+{$region File}
 procedure MainForm.ActionFileNewOnExecute(sender: Object; e: EventArgs);
 var
    sStatusMessage,sStatusMessageFromCheck,sErrorMessage:String;
@@ -823,8 +823,9 @@ begin
    end;
 
 end;
+{$endregion File}
 
-//{Edit}
+{$region Edit}
 procedure MainForm.ActionEditUndoOnExecute(sender: Object; e: EventArgs);
 var
    sStatusMessage:String;
@@ -1399,9 +1400,9 @@ begin
    end;
 
 end;
+{$endregion Edit}
 
-//{Window}
-
+{$region Window}
 procedure MainForm.ActionWindowNewWindowOnExecute(sender: Object; e: EventArgs);
 var
    sStatusMessage:String;
@@ -1665,8 +1666,9 @@ begin
    end;
 
 end;
+{$endregion Window}
 
-//{Help}
+{$region Help}
 procedure MainForm.ActionHelpHelpContentsOnExecute(sender: Object; e: EventArgs);
 var
    sStatusMessage:String;
@@ -1954,14 +1956,13 @@ begin
 
    end;
 end;
+{$endregion Help}
 
+{$endregion Actions}
 
-{
-Events
-}
-{
-Menu
-}
+{$region Events}
+
+{$region Menu}
 procedure MainForm.mnuFileNew_Click(sender: Object; e: EventArgs);
 begin
   ActionFileNewOnExecute(sender, e);
@@ -2126,11 +2127,9 @@ procedure MainForm.mnuHelpAbout_Click(sender: Object; e: EventArgs);
 begin
   ActionHelpAboutOnExecute(sender, e);
 end;
+{$endregion Menu}
 
-{
-Toolbar
-}
-
+{$region Toolbar}
 procedure MainForm.btnFileNew_Click(sender: Object; e: EventArgs);
 begin
   mnuFileNew_Click(sender, e);
@@ -2200,9 +2199,9 @@ procedure MainForm.btnHelpContents_Click(sender: Object; e: EventArgs);
 begin
   mnuHelpHelpContents_Click(sender, e);
 end;
-{
-Form
-}
+{$endregion Toolbar}
+
+{$region Form}
 procedure MainForm.MainForm_Load(sender: Object; e: EventArgs);
 var
    sErrorMessage:String;
@@ -2250,10 +2249,9 @@ begin
         end;
     end;
 end;
-{
-Controls
-}
+{$endregion Form}
 
+{$region Controls}
 procedure MainForm.SomeStringEdit_TextChanged(sender: Object; e: EventArgs);
 var
      sErrorMessage{, formatResult}:String;
@@ -2342,7 +2340,11 @@ begin
       end;
     end;
 end;
+{$endregion Controls}
 
+{$endregion Events}
+
+{$region Main}
 //begin
 //  System.Windows.Forms.Application.EnableVisualStyles();
 //  System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
@@ -2350,5 +2352,6 @@ end;
 ////  System.Windows.Forms.Application.Run(frmMain)
 //  System.Windows.Forms.Application.Run(new MainForm)
 //end;
+{$endregion Main}
 
 end.
