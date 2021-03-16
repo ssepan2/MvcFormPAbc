@@ -327,13 +327,14 @@ begin
       try
         Application.DoEvents{ProcessMessages};
 
-        proc := {@}objModel_PropertyChanged;
-
+        proc := objModel_PropertyChanged;
         if (objModel<>nil) then
         begin
            objModel.RemoveHandler(proc);
            objModel.Destroy{Free};
         end;
+        
+        //NEW
         objModel := TSomeModel.Create();
         objModel.AddHandler(proc);
 
@@ -355,19 +356,40 @@ end;
 function MainForm.FileOpen() : Boolean;
 var
    sErrorMessage,filePath:String;
+   proc:  TProcArgString;
+   objNewModel : TSomeModel;
 begin
   try
       try
         Application.DoEvents{ProcessMessages};
 
+        proc := objModel_PropertyChanged;
+        
         //OPEN
-        //update properties from XML
+        //deserialize from XML
         filePath := getFilePath(objModel);
-        objModel := TSomeModel.OpenFromSettings(objModel, filePath);
-        If objModel = nil  Then
+        objNewModel := TSomeModel.OpenFromSettings(objModel, filePath);
+        
+        If objNewModel = nil  Then
         begin
           raise Exception.Create('open failed.');
-        End;
+        End
+        else
+        begin
+          //success: commit to new model
+          
+          //remove handler from old model
+          if (objModel<>nil) then
+          begin
+             objModel.RemoveHandler(proc);
+             objModel.Destroy{Free};
+          end;
+          
+          objModel := objNewModel;
+          //add handler to new model
+          objModel.AddHandler(proc);
+          
+        end;
 
         objModel.RefreshModel(False); //to update view
 
@@ -399,7 +421,7 @@ begin
         Application.DoEvents{ProcessMessages};
 
          //SAVE
-         //save properties to XML
+         //serialize to XML
          If (String.IsNullOrWhiteSpace(objModel.Key) Or (objModel.Key = ModelBase.KEY_NEW) Or (bSaveAs)) Then
          begin
            sResponse := Interaction.InputBox('Save...', 'Enter Name for model:', objModel.Key);
