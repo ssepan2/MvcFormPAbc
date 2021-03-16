@@ -73,7 +73,11 @@ type
   end;
 
     const //static?
+        //NOTE:no inherent .net support for INI
         C_INI_FILE = 'SomeIni.ini';
+        //TODO:use xml i/o in .net  like vb/c#
+        //TODO:use filename handling like  my sample netbeans project
+        C_XML_FILE = 'SomeXml.xml';
 
 
 //var

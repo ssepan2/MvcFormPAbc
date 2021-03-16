@@ -196,9 +196,7 @@ var
 
 implementation
 
-
-
-{Utility}
+{$region Utility}
 procedure MainForm.delayFor(dt: double);
 var
   tc : double;
@@ -215,9 +213,9 @@ begin
     delayFor(3000);
     Something:=True;
 end;
+{$endregion Utility}
 
-
-{%Region PropertyChanged Handlers}
+{$region PropertyChanged}
 {
 <summary>
  Handler for PropertyChanged on the model field 'Dirty' and others.
@@ -294,8 +292,7 @@ begin
       end;
     end;
 End;
-{%EndRegion}
-
+{$endRegion PropertyChanged}
 
 function MainForm.FileNew() : Boolean;
 var
@@ -475,8 +472,6 @@ begin
     end;
 end;
 { $R *.lfm}
-
-{Actions}
 
 {$region Actions}
 
