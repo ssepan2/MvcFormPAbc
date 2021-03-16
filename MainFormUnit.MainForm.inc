@@ -69,6 +69,8 @@ procedure InitializeComponent;
         self.lblStatus := new System.Windows.Forms.ToolStripStatusLabel();
         self.lblError := new System.Windows.Forms.ToolStripStatusLabel();
         self.prgProgress := new System.Windows.Forms.ToolStripProgressBar();
+        self.lblAction := new System.Windows.Forms.ToolStripStatusLabel();
+        self.lblDirty := new System.Windows.Forms.ToolStripStatusLabel();
         self.SomeStringLabel := new System.Windows.Forms.Label();
         self.SomeIntegerLabel := new System.Windows.Forms.Label();
         self.SomeDateLabel := new System.Windows.Forms.Label();
@@ -76,8 +78,6 @@ procedure InitializeComponent;
         self.SomeStringEdit := new System.Windows.Forms.TextBox();
         self.SomeIntegerEdit := new System.Windows.Forms.TextBox();
         self.SomeDateEdit := new System.Windows.Forms.DateTimePicker();
-        self.lblAction := new System.Windows.Forms.ToolStripStatusLabel();
-        self.lblDirty := new System.Windows.Forms.ToolStripStatusLabel();
         self.menuStrip.SuspendLayout();
         self.toolStrip.SuspendLayout();
         self.statusStrip.SuspendLayout();
@@ -599,12 +599,28 @@ procedure InitializeComponent;
         self.prgProgress.Size := new System.Drawing.Size(100, 16);
         self.prgProgress.Visible := false;
         // 
+        // lblAction
+        // 
+        self.lblAction.Image := (System.Drawing.Image(resources.GetObject('lblAction.Image')));
+        self.lblAction.Name := 'lblAction';
+        self.lblAction.Size := new System.Drawing.Size(16, 17);
+        self.lblAction.ToolTipText := 'Action';
+        self.lblAction.Visible := false;
+        // 
+        // lblDirty
+        // 
+        self.lblDirty.Image := (System.Drawing.Image(resources.GetObject('lblDirty.Image')));
+        self.lblDirty.Name := 'lblDirty';
+        self.lblDirty.Size := new System.Drawing.Size(16, 17);
+        self.lblDirty.ToolTipText := 'Dirty';
+        self.lblDirty.Visible := false;
+        // 
         // SomeStringLabel
         // 
         self.SomeStringLabel.Location := new System.Drawing.Point(30, 52);
         self.SomeStringLabel.Name := 'SomeStringLabel';
         self.SomeStringLabel.Size := new System.Drawing.Size(100, 23);
-        self.SomeStringLabel.TabIndex := 3;
+        self.SomeStringLabel.TabIndex := 0;
         self.SomeStringLabel.Text := 'Some String:';
         self.SomeStringLabel.TextAlign := System.Drawing.ContentAlignment.MiddleRight;
         // 
@@ -613,7 +629,7 @@ procedure InitializeComponent;
         self.SomeIntegerLabel.Location := new System.Drawing.Point(30, 75);
         self.SomeIntegerLabel.Name := 'SomeIntegerLabel';
         self.SomeIntegerLabel.Size := new System.Drawing.Size(100, 23);
-        self.SomeIntegerLabel.TabIndex := 4;
+        self.SomeIntegerLabel.TabIndex := 2;
         self.SomeIntegerLabel.Text := 'Some Integer:';
         self.SomeIntegerLabel.TextAlign := System.Drawing.ContentAlignment.MiddleRight;
         // 
@@ -632,7 +648,7 @@ procedure InitializeComponent;
         self.SomeBooleanCheckBox.Location := new System.Drawing.Point(52, 104);
         self.SomeBooleanCheckBox.Name := 'SomeBooleanCheckBox';
         self.SomeBooleanCheckBox.Size := new System.Drawing.Size(98, 24);
-        self.SomeBooleanCheckBox.TabIndex := 6;
+        self.SomeBooleanCheckBox.TabIndex := 4;
         self.SomeBooleanCheckBox.Text := 'Some Boolean:';
         self.SomeBooleanCheckBox.UseVisualStyleBackColor := true;
         self.SomeBooleanCheckBox.CheckedChanged += SomeBooleanCheckBox_CheckedChanged;
@@ -642,7 +658,7 @@ procedure InitializeComponent;
         self.SomeStringEdit.Location := new System.Drawing.Point(136, 52);
         self.SomeStringEdit.Name := 'SomeStringEdit';
         self.SomeStringEdit.Size := new System.Drawing.Size(100, 20);
-        self.SomeStringEdit.TabIndex := 7;
+        self.SomeStringEdit.TabIndex := 1;
         self.SomeStringEdit.TextChanged += SomeStringEdit_TextChanged;
         // 
         // SomeIntegerEdit
@@ -650,7 +666,7 @@ procedure InitializeComponent;
         self.SomeIntegerEdit.Location := new System.Drawing.Point(136, 78);
         self.SomeIntegerEdit.Name := 'SomeIntegerEdit';
         self.SomeIntegerEdit.Size := new System.Drawing.Size(100, 20);
-        self.SomeIntegerEdit.TabIndex := 8;
+        self.SomeIntegerEdit.TabIndex := 3;
         self.SomeIntegerEdit.TextChanged += SomeIntegerEdit_TextChanged;
         // 
         // SomeDateEdit
@@ -658,24 +674,8 @@ procedure InitializeComponent;
         self.SomeDateEdit.Location := new System.Drawing.Point(136, 134);
         self.SomeDateEdit.Name := 'SomeDateEdit';
         self.SomeDateEdit.Size := new System.Drawing.Size(200, 20);
-        self.SomeDateEdit.TabIndex := 9;
+        self.SomeDateEdit.TabIndex := 6;
         self.SomeDateEdit.ValueChanged += SomeDateEdit_ValueChanged;
-        // 
-        // lblAction
-        // 
-        self.lblAction.Image := (System.Drawing.Image(resources.GetObject('lblAction.Image')));
-        self.lblAction.Name := 'lblAction';
-        self.lblAction.Size := new System.Drawing.Size(16, 17);
-        self.lblAction.ToolTipText := 'Action';
-        self.lblAction.Visible := false;
-        // 
-        // lblDirty
-        // 
-        self.lblDirty.Image := (System.Drawing.Image(resources.GetObject('lblDirty.Image')));
-        self.lblDirty.Name := 'lblDirty';
-        self.lblDirty.Size := new System.Drawing.Size(16, 17);
-        self.lblDirty.ToolTipText := 'Dirty';
-        self.lblDirty.Visible := false;
         // 
         // MainForm
         // 

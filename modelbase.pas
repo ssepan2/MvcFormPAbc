@@ -8,6 +8,8 @@ uses
   System, ssepan_laz_utility;
 
 type
+  {$TypeConverter(typeof(ExpandableObjectConverter))}
+  {$Serializable}
   TProcArgString = procedure(propertyName : String);// of object;
   THandlers = {specialize} {TFPG}List<TProcArgString>;
   TModelBase=class//(TObject)
@@ -57,6 +59,7 @@ type
     {
     Properties
     }
+    {$XmlIgnore}
     property Dirty : Boolean read GetDirty write SetDirty;
     Property Key : String read GetKey write SetKey;
   //class var

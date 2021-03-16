@@ -5,8 +5,11 @@
 interface
 
 uses
-  System, ModelBase, Ssepan_Laz_Utility;
+  System, System.IO, System.Runtime.Serialization, System.Xml.Serialization, ModelBase, Ssepan_Laz_Utility;
+
 type
+  {$TypeConverter(typeof(ExpandableObjectConverter))}
+  {$Serializable}
   TSomeModel=Class(TModelBase)
   private
     FForceNotify : Boolean; //:= False;
@@ -67,17 +70,17 @@ type
     {
     Methods
     }
-    class Function OpenFromSettings(var objModel : TSomeModel; sFilePath : String) : Boolean;
+    class Function OpenFromSettings(var objModel : TSomeModel; sFilePath : String) : TSomeModel;
     class Function SaveToSettings(var objModel : TSomeModel; sFilePath:String) : Boolean;
 
   end;
 
     const //static?
         //NOTE:no inherent .net support for INI
-        C_INI_FILE = 'SomeIni.ini';
+        C_INI_FILE : String = 'SomeIni.ini';
         //TODO:use xml i/o in .net  like vb/c#
         //TODO:use filename handling like  my sample netbeans project
-        C_XML_FILE = 'SomeXml.xml';
+        C_XML_FILE : String = 'somemodel_{0}.xml';
 
 
 //var
@@ -325,15 +328,18 @@ implementation
   {
   Static
   }
-  class Function TSomeModel.OpenFromSettings(var objModel : TSomeModel; sFilePath : String) : Boolean;
+  class Function TSomeModel.OpenFromSettings(var objModel : TSomeModel; sFilePath : String) : TSomeModel;
   var
           sErrorMessage,formatResult:String;
-          readValue : Object{Variant};
           bAllowDirty : Boolean;//model should implicitly be Not Dirty after Open (unless null/missing values were replaced with defaults)
+            returnValue : TSomeModel := nil;
+            returnValueType : System.Type := typeof(Object);
+            xs : XmlSerializer;
+            sr : StreamReader;
   begin
       try
          try
-            readValue := False;
+            println('OpenFromSettings:sFilePath:', sFilePath);
             bAllowDirty := False;
 
              If (String.IsNullOrWhiteSpace(objModel.Key)) Then
@@ -345,76 +351,27 @@ implementation
                  raise Exception.Create('model.Key is still new');
              end;
 
-//            with TIniFile.Create(sFilePath) do
-//            begin
-//
-//             //need to clear values after failure, in case an error during opening leaves data in inconsistent state; see if caller can check/handle this
-//
-//             //setting these will set Dirty property...
-//             readValue := {TIniFile}ReadString(objModel.Key,'SomeString','');
-//             If (readValue = Null) Then
-//             begin
-//                 formatResult:=String.Format('Error opening key=''{0}'', SomeString=Null',[objModel.Key]);
-//                 WriteLn(formatResult);
-//                 objModel.SomeString := ''; //String.Default
-//                 bAllowDirty := True;
-//             end
-//             Else
-//             begin
-//                 objModel.SomeString := readValue;
-//                 //formatResult:=String.Format('opened key=''{0}'', SomeString=''{0}''',[objModel.Key, objModel.SomeString]);
-//                 //WriteLn(formatResult);
-//             End;
-//
-//             readValue := {TIniFile}ReadBool(objModel.Key,'SomeBoolean',False);
-//             If (readValue = Null) Then
-//             begin
-//                 formatResult:=String.Format('Error opening key=''{0}'', SomeBoolean=Null',[objModel.Key]);
-//                 WriteLn(formatResult);
-//                 objModel.SomeBoolean := False; //Boolean.Default
-//                 bAllowDirty := True;
-//             end
-//             Else
-//             begin
-//                 objModel.SomeBoolean := readValue;
-//                 //formatResult:=String.Format('opened key=''{0}'', SomeBoolean=''{0}''',[objModel.Key, objModel.SomeBoolean.ToString()]);
-//                 //WriteLn(formatResult);
-//             End;
-//
-//             readValue := {TIniFile}ReadInteger(objModel.Key,'SomeInteger',0);
-//             If (readValue = Null) Then
-//             begin
-//                 formatResult:=String.Format('Error opening key=''{0}'', SomeInteger=Null',[objModel.Key]);
-//                 WriteLn(formatResult);
-//                 objModel.SomeInteger := 0; //Integer.Default
-//                 bAllowDirty := True;
-//             end
-//             Else
-//             begin
-//                 objModel.SomeInteger := readValue;
-//                 //formatResult:=String.Format('opened key=''{0}'', SomeInteger=''{0}''',[objModel.Key, objModel.SomeInteger.ToString()]);
-//                 //WriteLn(formatResult);
-//             End;
-//
-//             //readValue := {TIniFile}ReadString{ReadDateTime}(objModel.Key,'SomeDateTime',''{DateTimeToStr(Date)});
-//             readValue := {TIniFile}ReadDateTime(objModel.Key,'SomeDateTime',Date);
-//             If (readValue = Null) Then
-//             begin
-//                 formatResult:=String.Format('Error opening key=''{0}'', SomeDateTime=Null',[objModel.Key]);
-//                 WriteLn(formatResult);
-//                 objModel.SomeDateTime := Date; //Date.Default
-//                 bAllowDirty := True;
-//             end
-//             Else
-//             begin
-//                 objModel.SomeDateTime := readValue;
-//                 //formatResult:=String.Format('opened key=''{0}'', SomeDateTime=''{0}''',[objModel.Key, DateTimeToStr(objModel.SomeDateTime)]);
-//                 //WriteLn(formatResult);
-//             End;
-//
-//             //{TIniFile}UpdateFile; // Not needed
-//             {TIniFile}Free;
-//           end;
+            //XML Serializer of type Settings
+            returnValueType := typeof(TSomeModel);//returnValue.GetType();
+            xs := new XmlSerializer(returnValueType);
+
+            //Stream reader for file
+            sr := new StreamReader(sFilePath);
+
+            //de-serialize into Settings
+            returnValue := TSomeModel(xs.Deserialize(sr));
+//            println('OpenFromSettings:Deserialize:returnValue.SomeString:', returnValue.SomeString);
+//            println('OpenFromSettings:Deserialize:returnValue.SomeInteger:', returnValue.SomeInteger);
+//            println('OpenFromSettings:Deserialize:returnValue.SomeBoolean:', returnValue.SomeBoolean);
+//            println('OpenFromSettings:Deserialize:returnValue.SomeDateTime:', returnValue.SomeDateTime);
+            returnValue.RefreshModel(False);//Sync();
+//            println('OpenFromSettings:RefreshModel:returnValue.SomeString:', returnValue.SomeString);
+//            println('OpenFromSettings:RefreshModel:returnValue.SomeInteger:', returnValue.SomeInteger);
+//            println('OpenFromSettings:RefreshModel:returnValue.SomeBoolean:', returnValue.SomeBoolean);
+//            println('OpenFromSettings:RefreshModel:returnValue.SomeDateTime:', returnValue.SomeDateTime);
+            
+            //close file
+            sr.Close();
 
            //...so clear dirty flag after retrieving saved values (if no Null replacements were handled)
            If Not bAllowDirty Then
@@ -423,55 +380,48 @@ implementation
            End;
 
          finally
-           OpenFromSettings := True;
+           OpenFromSettings := returnValue;
          end;
-      except
-        on Ex: Exception do
-        begin
-           sErrorMessage:=FormatErrorForLog(Ex.Message , 'OpenFromSettings' , Ex.StackTrace.ToString);
-           LogErrorToFile(sErrorMessage);
-
-           raise Ex;
-        end;
+    except
+      on Ex: Exception do
+      begin
+         sErrorMessage:=FormatErrorForLog(Ex.Message , 'OpenFromSettings' , Ex.StackTrace.ToString);
+         LogErrorToFile(sErrorMessage);
       end;
-
+    end;
   End;
 
 class function TSomeModel.SaveToSettings(var objModel : TSomeModel; sFilePath:String) : Boolean;
 var
    sErrorMessage, formatResult:String;
+   xs : XmlSerializer;
+   sw : StreamWriter;
 begin
     try
       try
-        If (String.IsNullOrWhiteSpace(objModel.Key)) Then
-        begin
-            raise Exception.Create('model.Key is null');
-        End
-        Else If (objModel.Key = KEY_NEW) Then
-        begin
-            raise Exception.Create('model.Key is still new');
-        end;
+          println('SaveToSettings:sFilePath:', sFilePath);
+          If (String.IsNullOrWhiteSpace(objModel.Key)) Then
+          begin
+              raise Exception.Create('model.Key is null');
+          End
+          Else If (objModel.Key = KEY_NEW) Then
+          begin
+              raise Exception.Create('model.Key is still new');
+          end;
 
-//        with TIniFile.Create(sFilePath) do
-//        begin
-//
-//           WriteString(objModel.Key, 'SomeString', objModel.SomeString);
-//           WriteBool(objModel.Key, 'SomeBoolean', objModel.SomeBoolean);
-//           WriteInteger(objModel.Key, 'SomeInteger', objModel.SomeInteger);
-//           WritedateTime(objModel.Key, 'SomeDateTime', objModel.SomeDateTime);
-//           formatResult:=String.Format('saved key=''{0}'', SomeString=''{0}''',[objModel.Key, objModel.SomeString]);
-//           WriteLn(formatResult);
-//           formatResult:=String.Format('saved key=''{0}'', SomeBoolean=''{0}''',[objModel.Key, objModel.SomeBoolean.ToString()]);
-//           WriteLn(formatResult);
-//           formatResult:=String.Format('saved key=''{0}'', SomeInteger=''{0}''',[objModel.Key, objModel.SomeInteger.ToString()]);
-//           WriteLn(formatResult);
-//           formatResult:=String.Format('saved key=''{0}'', SomeDateTime=''{0}''',[objModel.Key, DateTimeToStr(objModel.SomeDateTime)]);
-//           WriteLn(formatResult);
-//
-//           UpdateFile; // Not needed
-//           Free;
-//         end;
+          //XML Serializer of type Settings
+           xs := new XmlSerializer(objModel.GetType());
 
+          //Stream writer for file
+           sw := new StreamWriter(sFilePath);
+
+          //serialize out of Settings
+          xs.Serialize(sw, objModel);
+
+          //close file
+          sw.Close();
+
+          objModel.RefreshModel(False);//Sync();
 
       finally
              objModel.Dirty := False;
@@ -480,14 +430,13 @@ begin
     except
       on Ex: Exception do
       begin
-         formatResult:=String.Format('Key: ''{0}''',[objModel.Key]);
+         formatResult:=String.Format('Key: ''{0}''',objModel.Key);
          WriteLn(formatResult);
          sErrorMessage:=FormatErrorForLog(Ex.Message , 'SaveToSettings' , Ex.StackTrace.ToString);
          LogErrorToFile(sErrorMessage);
-
-         raise Ex;
       end;
     end;
+    
 End;
 
 end.

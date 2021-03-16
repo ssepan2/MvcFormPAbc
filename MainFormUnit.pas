@@ -144,6 +144,7 @@ type
     //from here down we should be able to edit directly
     procedure delayFor(dt: double);
     function Something():Boolean;    
+    function getFilePath(objModel : TSomeModel) : String; 
     procedure objModel_PropertyChanged(propertyName : String);
     function FileNew() : Boolean;
     function FileOpen() : Boolean;  
@@ -213,6 +214,29 @@ begin
     delayFor(3000);
     Something:=True;
 end;
+    
+//isolate this from FileOpen, FileSave
+function MainForm.getFilePath(objModel : TSomeModel) : String; 
+var
+     sErrorMessage{, formatResult}:String;
+     sFilePath:String :='';
+begin
+    try 
+      try
+        sFilePath := System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), String.Format(SomeModel.C_XML_FILE, objModel.Key));
+      finally 
+          //always do this
+      end;
+    except
+      on Ex: Exception do
+      begin
+         sErrorMessage:=FormatErrorForLog(Ex.Message , 'getFilePath' , Ex.StackTrace.ToString);
+         LogErrorToFile(sErrorMessage);
+      end;
+    end;
+    getFilePath := sFilePath;
+end;
+
 {$endregion Utility}
 
 {$region PropertyChanged}
@@ -236,42 +260,42 @@ begin
                 formatResult:=String.Format(APP_TITLE_FORMAT,objModel.Key);
                 MainForm.ActiveForm.Text := formatResult + DateTime.Now.ToString();
 
-                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.Key);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{1}'' ',propertyName,objModel.Key);
                 WriteLn(formatResult);
             end;
             'SomeString':
             begin
                 self.SomeStringEdit.Text := objModel.SomeString;
 
-                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeString);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{1}'' ',propertyName,objModel.SomeString);
                 WriteLn(formatResult);
             end;
             'SomeInteger':
             begin
                 self.SomeIntegerEdit.Text := IntToStr(objModel.SomeInteger);
 
-                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeInteger.ToString());
+                formatResult:=String.Format('handled event: ''{0}'' = ''{1}'' ',propertyName,objModel.SomeInteger.ToString());
                 WriteLn(formatResult);
             end;
             'SomeBoolean':
             begin
                 self.SomeBooleanCheckBox.Checked := objModel.SomeBoolean;
 
-                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.SomeBoolean.ToString());
+                formatResult:=String.Format('handled event: ''{0}'' = ''{1}'' ',propertyName,objModel.SomeBoolean.ToString());
                 WriteLn(formatResult);
             end;
             'SomeDateTime':
             begin
                 self.SomeDateEdit.Value := objModel.SomeDateTime;
 
-                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,formatResult);
+                formatResult:=String.Format('handled event: ''{0}'' = ''{1}'' ',propertyName,formatResult);
                 WriteLn(formatResult);
             end;
             'Dirty':
             begin
                 ToolStripStatusLabel(self.statusStrip.Items.Find('lblDirty', False)[0]).Visible := objModel.Dirty; //TODO:use wrapper sub in viewmodel
 
-                formatResult:=String.Format('handled event: ''{0}'' = ''{0}'' ',propertyName,objModel.Dirty.ToString());
+                formatResult:=String.Format('handled event: ''{0}'' = ''{1}'' ',propertyName,objModel.Dirty.ToString());
                 WriteLn(formatResult);
             end;
             Else
@@ -337,9 +361,10 @@ begin
         Application.DoEvents{ProcessMessages};
 
         //OPEN
-        //update properties from INI
-        filePath:=SomeModel.C_INI_FILE;//TSomeModel.C_INI_FILE;
-        If Not TSomeModel.OpenFromSettings(objModel,filePath) Then
+        //update properties from XML
+        filePath := getFilePath(objModel);
+        objModel := TSomeModel.OpenFromSettings(objModel, filePath);
+        If objModel = nil  Then
         begin
           raise Exception.Create('open failed.');
         End;
@@ -364,7 +389,7 @@ end;
 // </summary>
 function MainForm.FileSave(bSaveAs : Boolean; var sStatusMessage:String) : Boolean;
 var
-   sErrorMessage,sResponse:String;
+   sErrorMessage,sResponse,filePath:String;
    bCancel : Boolean;
 begin
   try
@@ -374,7 +399,7 @@ begin
         Application.DoEvents{ProcessMessages};
 
          //SAVE
-         //save properties to INI
+         //save properties to XML
          If (String.IsNullOrWhiteSpace(objModel.Key) Or (objModel.Key = ModelBase.KEY_NEW) Or (bSaveAs)) Then
          begin
            sResponse := Interaction.InputBox('Save...', 'Enter Name for model:', objModel.Key);
@@ -394,7 +419,8 @@ begin
          end
          Else
          begin
-            If Not TSomeModel.SaveToSettings(objModel,SomeModel.C_INI_FILE) Then
+            filePath := getFilePath(objModel);
+            If Not TSomeModel.SaveToSettings(objModel, filePath) Then
             begin
                raise Exception.Create('save failed.');
             end;
