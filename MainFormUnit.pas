@@ -175,6 +175,12 @@ type
     procedure ActionWindowArrangeAllExecute(sender: Object; e: EventArgs);
     procedure ActionWindowHideExecute(sender: Object; e: EventArgs);
     procedure ActionWindowShowExecute(sender: Object; e: EventArgs);
+    procedure ActionHelpHelpContentsOnExecute(sender: Object; e: EventArgs);
+    procedure ActionHelpHelpIndexOnExecute(sender: Object; e: EventArgs);
+    procedure ActionHelpHelpOnHelpOnExecute(sender: Object; e: EventArgs);
+    procedure ActionHelpLicenceInformationOnExecute(sender: Object; e: EventArgs);
+    procedure ActionHelpCheckForUpdatesOnExecute(sender: Object; e: EventArgs);
+    procedure ActionHelpAboutOnExecute(sender: Object; e: EventArgs);
   public
     constructor;
     begin
@@ -1661,293 +1667,293 @@ begin
 end;
 
 //{Help}
-//procedure MainForm.ActionHelpHelpContentsOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='HelpHelpContents...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuHelpContents.Image);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'HelpHelpContents done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'HelpHelpContents cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpContentsOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//end;
-//
-//procedure MainForm.ActionHelpHelpIndexOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='HelpHelpIndex...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'HelpHelpIndex done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'HelpHelpIndex cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpIndexOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//end;
-//
-//procedure MainForm.ActionHelpLicenceInformationOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='HelpLicenceInformation...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'HelpLicenceInformation done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'HelpLicenceInformation cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpLicenceInformationOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//end;
-//
-//procedure MainForm.ActionHelpOnlineHelpOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='HelpOnlineHelp...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'HelpOnlineHelp done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'HelpOnlineHelp cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpOnlineHelpOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//end;
-//
-//procedure MainForm.ActionHelpCheckForUpdatesOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='HelpCheckForUpdates...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'HelpCheckForUpdates done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'HelpCheckForUpdates cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//     end;
-//   except
-//       on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpCheckForUpdatesOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//
-//end;
-//
-//procedure MainForm.ActionHelpAboutOnExecute(sender: Object; e: EventArgs);
-//var
-//   sStatusMessage:String;
-//   sErrorMessage:String;
-//begin
-//   try
-//     try
-//     //clear status, error messages at beginning of every action
-//    sStatusMessage:='HelpAbout...';
-//    sErrorMessage:='';
-//
-//    //use progress bar (marquee) with action icon (where available) in status bar
-//    StartProgressBarWithPicture
-//    (
-//     sStatusMessage,
-//     sErrorMessage,
-//     True,
-//     False,
-//     0,
-//     100,
-//     lblStatusMessage,
-//     lblErrorMessage,
-//     ProgressBar,
-//     imgActionIcon,
-//     MenuHelpAbout.Bitmap
-//     );//
-//
-//    //perform sender disable/enable in all actions
-//          self.mnuXxxYyy.Enabled := False;
-//          //self.btnXxxYyy.Enabled := False;
-//
-//        If Something() Then
-//        begin
-//           sStatusMessage := 'HelpAbout done.'  ;
-//        end
-//        Else
-//        begin
-//           sStatusMessage := 'HelpAbout cancelled.' ;
-//        End;
-//     finally
-//       //always do this
-//          self.mnuXxxYyy.Enabled := True;
-//          //self.btnXxxYyy.Enabled := True;
-//       StopProgressBar
-//       (
-//        sStatusMessage,
-//        sErrorMessage,
-//        lblStatusMessage,
-//        lblErrorMessage,
-//        ProgressBar,
-//        imgActionIcon
-//        );
-//     end;
-//   except
-//         on Ex: Exception do
-//       begin
-//          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpAboutOnExecute' , Ex.StackTrace.ToString);
-//          StopProgressBar
-//          (
-//           '',
-//           sErrorMessage,
-//           lblStatusMessage,
-//           lblErrorMessage,
-//           ProgressBar,
-//           imgActionIcon
-//           );
-//          LogErrorToFile(sErrorMessage);
-//       end;
-//
-//   end;
-//end;
+procedure MainForm.ActionHelpHelpContentsOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Help Contents...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, self.mnuHelpHelpContents.Image);//
+
+    //perform sender disable/enable in all actions
+          self.mnuHelpHelpContents.Enabled := False;
+          self.btnHelpContents.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Help Contents done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Help Contents cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuHelpHelpContents.Enabled := True;
+          self.btnHelpContents.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpContentsOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+end;
+
+procedure MainForm.ActionHelpHelpIndexOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Help Index...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuHelpHelpIndex.Enabled := False;
+          //self.btnHelpHelpIndex.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Help Index done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Help Index cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuHelpHelpIndex.Enabled := True;
+          //self.btnHelpHelpIndex.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpIndexOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+end;
+
+procedure MainForm.ActionHelpHelpOnHelpOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Help On Help...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuHelpHelpOnHelp.Enabled := False;
+          //self.btnHelpHelpOnHelp.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Help On Help done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Help On Help cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuHelpHelpOnHelp.Enabled := True;
+          //self.btnHelpHelpOnHelp.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpHelpOnHelpOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+end;
+
+procedure MainForm.ActionHelpLicenceInformationOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Licence Information...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuHelpLicenceInformation.Enabled := False;
+          //self.btnHelpLicenceInformation.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Licence Information done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Licence Information cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuHelpLicenceInformation.Enabled := True;
+          //self.btnHelpLicenceInformation.Enabled := True;
+       ssepan_laz_application.StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpLicenceInformationOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+end;
+
+procedure MainForm.ActionHelpCheckForUpdatesOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='Check For Updates...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture(sStatusMessage, sErrorMessage, True, False, 0, 100, lblStatus, lblError, prgProgress, lblAction, Nil);//
+
+    //perform sender disable/enable in all actions
+          self.mnuHelpCheckForUpdates.Enabled := False;
+          //self.btnHelpCheckForUpdates.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'Check For Updates done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'Check For Updates cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuHelpCheckForUpdates.Enabled := True;
+          //self.btnHelpCheckForUpdates.Enabled := True;
+       StopProgressBar(sStatusMessage, sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+     end;
+   except
+       on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpCheckForUpdatesOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar('', sErrorMessage, lblStatus, lblError, prgProgress, lblAction);
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+
+end;
+
+procedure MainForm.ActionHelpAboutOnExecute(sender: Object; e: EventArgs);
+var
+   sStatusMessage:String;
+   sErrorMessage:String;
+begin
+   try
+     try
+     //clear status, error messages at beginning of every action
+    sStatusMessage:='About...';
+    sErrorMessage:='';
+
+    //use progress bar (marquee) with action icon (where available) in status bar
+    StartProgressBarWithPicture
+    (
+     sStatusMessage,
+     sErrorMessage,
+     True,
+     False,
+     0,
+     100,
+     lblStatus,
+     lblError,
+     prgProgress,
+     lblAction,
+     self.mnuHelpAbout.Image
+     );//
+
+    //perform sender disable/enable in all actions
+          self.mnuHelpAbout.Enabled := False;
+          //self.btnHelpAbout.Enabled := False;
+
+        If Something() Then
+        begin
+           sStatusMessage := 'About done.'  ;
+        end
+        Else
+        begin
+           sStatusMessage := 'About cancelled.' ;
+        End;
+     finally
+       //always do this
+          self.mnuHelpAbout.Enabled := True;
+          //self.btnHelpAbout.Enabled := True;
+       StopProgressBar
+       (
+        sStatusMessage,
+        sErrorMessage,
+         lblStatus,
+         lblError,
+         prgProgress,
+         lblAction
+        );
+     end;
+   except
+         on Ex: Exception do
+       begin
+          sErrorMessage:=FormatErrorForLog(Ex.Message , 'ActionHelpAboutOnExecute' , Ex.StackTrace.ToString);
+          StopProgressBar
+          (
+           '',
+           sErrorMessage,
+           lblStatus,
+           lblError,
+           prgProgress,
+           lblAction
+           );
+          LogErrorToFile(sErrorMessage);
+       end;
+
+   end;
+end;
 
 
 {
@@ -2093,32 +2099,32 @@ end;
 
 procedure MainForm.mnuHelpHelpContents_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='HelpHelpContents';
+  ActionHelpHelpContentsOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuHelpHelpIndex_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='HelpHelpIndex';
+  ActionHelpHelpIndexOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuHelpHelpOnHelp_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='HelpHelpOnHelp';
+  ActionHelpHelpOnHelpOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuHelpLicenceInformation_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='HelpLicenceInformation';
+  ActionHelpLicenceInformationOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuHelpCheckForUpdates_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='HelpCheckForUpdates';
+  ActionHelpCheckForUpdatesOnExecute(sender, e);
 end;
 
 procedure MainForm.mnuHelpAbout_Click(sender: Object; e: EventArgs);
 begin
-  lblStatus.Text:='HelpAbout';
+  ActionHelpAboutOnExecute(sender, e);
 end;
 
 {
